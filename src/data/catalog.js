@@ -1,4 +1,4 @@
-import { getAdminSales, recordAdminSale, recordInventoryMovements, saveAdminSales } from "./adminData.js";
+import { getAdminSales, getAdminUsers, isEmployeeRole, recordAdminSale, recordInventoryMovements, saveAdminSales } from "./adminData.js";
 
 const defaultCategories = [
   { id: 1, nombre: "Guitarras", descripcion: "Guitarras acústicas, eléctricas y electroacústicas", icon: "guitar" },
@@ -30,6 +30,7 @@ const localImage = (file, alt) => ({
 const defaultProducts = [
   {
     id: 1,
+    codigo_barras: "0000000000001",
     nombre: "Guitarra Acustica La Clasica Martin Sencilla Nylon",
     descripcion: "guitarra acustica martín sencilla tapa armónica en madera laminada, aros en moncoro, fondo en madera laminada, mástil en cedro, diapasón en moncoro, traste amarillo, roseta en calcomanía.",
     precio: 180500,
@@ -55,6 +56,7 @@ const defaultProducts = [
   },
   {
     id: 2,
+    codigo_barras: "0000000000002",
     nombre: "Guitarra Electrica Donner EC7484 Hush-X Pro Midnight Glow",
     descripcion: "guitarra eléctrica headless diseñada para músicos que buscan portabilidad, tecnología y versatilidad profesional. Su innovador diseño ultracompacto permite practicar y tocar en cualquier lugar con máxima comodidad, incorporando efectos integrados, conexión OTG y sistema silencioso para práctica con audífonos. El acabado Midnight Glow ofrece una apariencia moderna con efecto brillante y cambios de tono bajo diferentes luces, ideal para escenarios y contenido visual.",
     precio: 1790000,
@@ -82,6 +84,7 @@ const defaultProducts = [
   },
   {
     id: 3,
+    codigo_barras: "0000000000003",
     nombre: "Guitarra Electroacustica Mc-art A13ce-b Negra",
     descripcion: "Guitarra electroacústica de cuerpo sólido, ideal para ensayo y escenario.",
     precio: 539000,
@@ -105,6 +108,7 @@ const defaultProducts = [
   },
   {
     id: 4,
+    codigo_barras: "0000000000004",
     nombre: "Guitarra Electrica Mc-art E10w-s-b Negra",
     descripcion: "Guitarra eléctrica de cuerpo sólido, ideal para ensayo y escenario.",
     precio: 460000,
@@ -129,6 +133,7 @@ const defaultProducts = [
   },
   {
     id: 5,
+    codigo_barras: "0000000000005",
     nombre: "Guitarra Electrica Epiphone EGS1CHCH3 Ltd Ed Sg-Special-I Cherry",
     descripcion: "Perfecta para quienes buscan su primera SG o desean una guitarra ligera, confiable y con el sonido clásico del rock que ha marcado más de 50 años de historia. Mantiene el icónico diseño de doble corte, el tono poderoso de una SG tradicional y la comodidad que la ha convertido en un estándar en escenarios de todo el mundo.",
     precio: 979000,
@@ -155,6 +160,7 @@ const defaultProducts = [
   },
   {
     id: 6,
+    codigo_barras: "0000000000006",
     nombre: "Guitarra Electroacustica Ibanez Frh10n-natural Flat Nylon",
     descripcion: "Guitarra eléctricoacustica de cuerpo sólido, ideal para ensayo y escenario.",
     precio: 1900000,
@@ -182,6 +188,7 @@ const defaultProducts = [
   },
   {
     id: 7,
+    codigo_barras: "0000000000007",
     nombre: "Guitarra Acustica Epiphone Ea10nach1 Dr-100 Natural",
     descripcion: "Guitarra fiable y asequible con un sonido vibrante y colorido. Cuenta con una tapa de abeto y caoba detrás y a los lados, junto con la forma clásica del cuerpo acorazado, la guitarra entrega un tono rico y tiene un cuerpo con proyección de rango medio excelente, perfecto para prácticamente cualquier estilo y el magnífico acabado da un look propio de Epiphone.",
     precio: 1000000,
@@ -207,6 +214,7 @@ const defaultProducts = [
   },
   {
     id: 8,
+    codigo_barras: "0000000000008",
     nombre: "Guitarra Electrica Ibanez IC420-ABM/ESTUCHE",
     descripcion: "Guitarra eléctrica Ibanez IC420-ABM con cuerpo de okumé y mástil encastrado.",
     precio: 3000000,
@@ -232,6 +240,7 @@ const defaultProducts = [
   },
   {
     id: 9,
+    codigo_barras: "0000000000009",
     nombre: "Guitarra Electrica Kramer KEVDMBKBH3 Dave Mustaine Signature Vanguard Ebony - w/ Custom Hardshell Case",
     descripcion: "El Kramer Dave Mustaine Vanguard ofrece los sonidos potentes y pesados ​​y el rendimiento excepcional en el escenario y en el estudio que Dave exige. Está equipado con un cuerpo Vanguard de caoba simétrico, un mástil de caoba con escala de 25,5” con un perfil personalizado de Dave Mustaine en C medio, un diapasón de ébano con 24 trastes jumbo, herrajes cromados negros y el exclusivo juego de pastillas Seymour Duncan® Thrash Factor de Dave Mustaine. También se incluye un estuche rígido personalizado de Dave Mustaine.",
     precio: 7190000,
@@ -257,6 +266,7 @@ const defaultProducts = [
   },
   {
     id: 10,
+    codigo_barras: "0000000000010",
     nombre: "Guitarra Electrica Gibson DSXE00CHCH1 80s Explorer Cherry",
     descripcion: "La Gibson Explorer 80s está basada en los modelos Explorer de los años 80. Cuenta con cuerpo de caoba, mástil de caoba encolado con perfil SlimTaper y diapasón de palo de rosa con 22 trastes medio jumbo. Incorpora pastillas humbucker 80s Tribute, cableado a mano con condensadores Orange Drop, y selector de 3 posiciones. Su estética incluye hardware cromado, perillas Speed negras y no tiene golpeador. Incluye estuche rígido Gibson.",
     precio: 11900000,
@@ -282,6 +292,7 @@ const defaultProducts = [
   },
   {
     id: 11,
+    codigo_barras: "0000000000011",
     nombre: "Guitarra Electrica Jackson Rhoads X Srs Rrx24 W/blk 2913636520",
     descripcion: "Guitarra eléctrica Jackson X Series Rhoads RRX24, referencia 2913636520, con cuerpo de álamo, mástil de arce neck-through, diapasón de laurel, dos pastillas activas Seymour Duncan Blackouts y puente Floyd Rose Special de doble bloqueo. La Jackson X Series Rhoads RRX24 combina el diseño Rhoads con una construcción neck-through de arce, cuerpo de álamo y diapasón de laurel de radio compuesto. Integra dos pastillas activas Seymour Duncan Blackouts, controles independientes de volumen, control de tono y un puente Floyd Rose Special de doble bloqueo.",
     precio: 4900000,
@@ -307,6 +318,7 @@ const defaultProducts = [
   },
   {
     id: 12,
+    codigo_barras: "0000000000012",
     nombre: "Guitarra Electrica Kramer Tracii Guns Gunstar Voyager KVTGBKMCF3",
     descripcion: "Guitarra eléctrica Kramer Tracii Guns Gunstar Voyager KVTGBKMCF3, modelo signature del guitarrista Tracii Guns de LA Guns. Cuenta con cuerpo tipo Voyager de caoba con acabado Black Metallic y gráficos de llamas, mástil de arce de 3 piezas con perfil Slim C, diapasón de arce y sistema Floyd Rose Serie 1000. Equipada con dos pastillas Epiphone ProBucker con controles de volumen independientes y función push/pull para división de bobina, ofreciendo gran versatilidad tonal para rock y hard rock. Incluye estuche premium Kramer.",
     precio: 5737200,
@@ -335,6 +347,7 @@ const defaultProducts = [
   },
   {
     id: 13,
+    codigo_barras: "0000000000013",
     nombre: "Guitarra Acustica Ibanez EWP14WB-OPN",
     descripcion: "Guitarra acústica Ibanez EWP14WB-OPN con cuerpo EW estilo tenor de tamaño compacto y cutaway superior. Construida con tapa, fondo y aros de ovangkol, mástil de okoume y diapasón de purpleheart (corazón púrpura). Su escala corta de 432 mm y afinación de fábrica A-D-G-C-E-A ofrecen una experiencia única entre una guitarra acústica tradicional y un instrumento de viaje. Incorpora puente embutido de purpleheart, roseta de abulón y clavijas cromadas de fundición de alta precisión.",
     precio: 890000,
@@ -363,6 +376,7 @@ const defaultProducts = [
   },
   {
     id: 14,
+    codigo_barras: "0000000000014",
     nombre: "Bajo Electrico Mc-Art E91B 5 Cuerdas BLK Mic Act",
     descripcion: "Bajo eléctrico Mc-Art E91B de 5 cuerdas con acabado negro (BLK) y sistema de micrófonos activos. Diseñado para ofrecer un amplio rango tonal gracias a su quinta cuerda, incorpora cuerpo de tilo, mástil de arce y electrónica activa con doble pastilla humbucker. Sus 24 trastes y ecualización activa permiten obtener sonidos profundos y definidos para estilos como rock, funk, pop, reggae y música contemporánea. Ideal para estudiantes, músicos en formación y bajistas que buscan potencia y versatilidad a un precio accesible. 【1-edf480】【2-a433eb】",
     precio: 890000,
@@ -392,6 +406,7 @@ const defaultProducts = [
   },
   {
     id: 15,
+    codigo_barras: "0000000000015",
     nombre: "Bajo Electrico Epiphone EBTBVSBH1 T-Bird 4 Stg Rev",
     descripcion: "Bajo eléctrico Epiphone Thunderbird IV EBTBVSBH1 con el icónico diseño reverse Thunderbird desarrollado originalmente por Ray Dietrich. Construido con cuerpo de caoba, mástil de arce hard maple y diapasón de radio de 12 pulgadas, ofrece un sonido potente y definido gracias a sus dos pastillas humbucker Epiphone TB Plus. Su puente clásico de 3 puntos totalmente ajustable y controles independientes de volumen brindan una gran versatilidad para rock, hard rock y metal. Mantiene la estética clásica Thunderbird con hardware negro y acabado Vintage Sunburst.",
     precio: 2390000,
@@ -422,6 +437,7 @@ const defaultProducts = [
   },
   {
     id: 16,
+    codigo_barras: "0000000000016",
     nombre: "Piano Digital Casio Privia PX-S1100MB Beige Meloso",
     descripcion: "Piano digital Casio Privia PX-S1100MB Beige diseñado para pianistas que buscan una experiencia auténtica en un formato compacto y portátil. Incorpora un teclado Smart Scaled Hammer Action de 88 teclas, motor de sonido Morphing AiR Multidimensional y una polifonía de 192 notas para una interpretación natural y expresiva. Incluye conectividad inalámbrica de audio y MIDI mediante el adaptador WU-BT10, grabador MIDI y de audio integrados, además de 18 sonidos de alta calidad y 60 canciones incorporadas para práctica y aprendizaje. 【1-6225d2】",
     precio: 3590000,
@@ -452,6 +468,7 @@ const defaultProducts = [
   },
   {
     id: 17,
+    codigo_barras: "0000000000017",
     nombre: "Teclado Roland V-Stage 88",
     descripcion: "Teclado de escenario Roland V-Stage 88 diseñado para músicos profesionales que requieren máximo control y calidad sonora en directo. Integra cuatro motores de sonido independientes para órgano, piano acústico, piano eléctrico y sintetizador, cada uno con controles dedicados para una experiencia intuitiva y fluida. Su teclado contrapesado de 88 teclas con acción de martillo, escapement e Ivory Feel proporciona una respuesta auténtica para intérpretes de piano. Además, incorpora tecnología V-Piano, SuperNATURAL, Virtual Tone Wheel y ZEN-Core, ofreciendo una amplia biblioteca de sonidos y herramientas avanzadas para actuaciones en vivo.",
     precio: 17390000,
@@ -484,6 +501,7 @@ const defaultProducts = [
   },
   {
     id: 18,
+    codigo_barras: "0000000000018",
     nombre: "Piano Acustico Ritmuller Vertical RS118 A111",
     descripcion: "Piano acústico vertical Ritmüller RS118 A111 diseñado para estudiantes avanzados, instituciones musicales y pianistas que buscan un instrumento con excelente proyección sonora y calidad de construcción. Cuenta con una altura de 119 cm, tapa armónica de abeto de grano fino, cuerdas Röslau fabricadas en Alemania y martillos Pearl River de alta calidad. Incorpora tapa de teclado con cierre suave y mecánica Pearl River, ofreciendo una respuesta precisa y una interpretación cómoda y expresiva.",
     precio: 17900000,
@@ -515,6 +533,7 @@ const defaultProducts = [
   },
   {
     id: 19,
+    codigo_barras: "0000000000019",
     nombre: "Cello Cervini HC-100 1/4",
     descripcion: "Violonchelo Cervini HC-100 tamaño 1/4 diseñado para estudiantes que inician su formación musical. Construido con tapa de abeto sólido, fondo y costados de arce sólido, mástil de arce y diapasón ebonizado. Su configuración facilita una digitación precisa y una correcta entonación durante el aprendizaje. Incluye componentes resistentes y acabado rojo tradicional barnizado.",
     precio: 1590000,
@@ -542,6 +561,7 @@ const defaultProducts = [
   },
   {
     id: 20,
+    codigo_barras: "0000000000020",
     nombre: "Cello Cervini HC-300 3/4",
     descripcion: "Violonchelo Cervini HC-300 tamaño 3/4 orientado a estudiantes intermedios. Fabricado con tapa de abeto, fondo de arce y componentes diseñados para proporcionar una correcta entonación y facilidad de ejecución. Incluye accesorios esenciales para comenzar a tocar inmediatamente.",
     precio: 2990000,
@@ -569,6 +589,7 @@ const defaultProducts = [
   },
   {
     id: 21,
+    codigo_barras: "0000000000021",
     nombre: "Violin Cervini HV-300 3/4",
     descripcion: "Violín Cervini HV-300 tamaño 3/4 fabricado con maderas macizas seleccionadas de pícea y arce. Diseñado para estudiantes que requieren una mejor respuesta acústica y una entonación precisa. Incluye arco, estuche tipo mochila y colofonia.",
     precio: 690000,
@@ -596,6 +617,7 @@ const defaultProducts = [
   },
   {
     id: 22,
+    codigo_barras: "0000000000022",
     nombre: "Cello Cremona SC-75 4/4",
     descripcion: "Violonchelo Cremona SC-75 tamaño completo 4/4 perteneciente a la serie Novice. Construido con tapa de abeto macizo, fondo y costados de arce macizo, además de accesorios ebonizados. Diseñado para estudiantes que buscan calidad, facilidad de interpretación y una respuesta acústica equilibrada.",
     precio: 3390000,
@@ -623,6 +645,7 @@ const defaultProducts = [
   },
   {
     id: 23,
+    codigo_barras: "0000000000023",
     nombre: "Viola Mc-Art L1413P 1/2 14\"",
     descripcion: "Viola Mc-Art L1413P de tamaño 1/2 (14 pulgadas), diseñada para estudiantes jóvenes que requieren un instrumento cómodo y fácil de tocar. Incluye estuche, arco y colofonia para comenzar a practicar desde el primer día.",
     precio: 312550,
@@ -652,6 +675,7 @@ const defaultProducts = [
   },
   {
     id: 24,
+    codigo_barras: "0000000000024",
     nombre: "Ukelele Martin Concierto W/GB 1120210XKCONCERTUK",
     descripcion: "Ukelele acústico Martin 0XK Concert Uke perteneciente a la reconocida serie X. Su cuerpo tamaño concierto está construido con laminado de alta presión (HPL) con patrón de koa, ofreciendo gran resistencia y una estética elegante. Incorpora mástil de abedul laminado, diapasón de sipo y puente de morado. Incluye funda blanda para facilitar su transporte y almacenamiento.",
     precio: 1900000,
@@ -684,6 +708,7 @@ const defaultProducts = [
   },
   {
     id: 25,
+    codigo_barras: "0000000000025",
     nombre: "Ukulele Fender Seaside Soprano 0971620521",
     descripcion: "Ukulele Fender Seaside Soprano diseñado para principiantes y músicos que buscan un instrumento portátil y fácil de tocar. Presenta un sonido brillante y cálido gracias a su construcción en nogal y cuerdas de nailon. Se entrega como paquete completo con funda, correa, soporte, afinador de clip, púas y un juego adicional de cuerdas.",
     precio: 990000,
@@ -716,6 +741,7 @@ const defaultProducts = [
   },
   {
     id: 26,
+    codigo_barras: "0000000000026",
     nombre: "Violin Electrico Mc-Art LVE-W14",
     descripcion: "Violín eléctrico Mc-Art LVE-W14 con diseño moderno y ligero, ideal para práctica, grabación y presentaciones en vivo. Ofrece un sonido claro y potente mediante su sistema electrónico integrado. Su construcción liviana facilita largas sesiones de interpretación y permite conectarlo a amplificadores o utilizar audífonos para practicar de forma silenciosa.",
     precio: 719100,
@@ -747,6 +773,7 @@ const defaultProducts = [
   },
   {
     id: 27,
+    codigo_barras: "0000000000027",
     nombre: "Saxofon Alto Victory G2-UAGB",
     descripcion: "Saxofón alto profesional Victory G2-UAGB de la serie Uprise, afinado en Mi bemol (Eb). Diseñado para músicos exigentes que buscan potencia, ergonomía y calidad sonora profesional. Incorpora una campana ampliada que mejora la proyección y presencia del sonido, chimeneas roladas individualmente que enriquecen la resonancia y prolongan la vida útil de las zapatillas, además de resonadores metálicos que aportan mayor brillo y volumen. Sus zapatillas italianas Pisoni premium, muelles de acero azul y llaves de palma ajustables garantizan una respuesta rápida, cómoda y precisa. Incluye estuche rígido de protección y transporte.",
     precio: 16000000,
@@ -775,6 +802,7 @@ const defaultProducts = [
   },
   {
     id: 28,
+    codigo_barras: "0000000000028",
     nombre: "Eufonio Besson BE164-2-0 4 Pistones",
     descripcion: "Eufonio Besson Prodige BE164-2-0 afinado en Sib (Bb), diseñado para estudiantes avanzados y músicos que buscan la calidad y tradición sonora característica de la marca Besson. Fabricado en latón amarillo con acabado plateado, combina una respuesta equilibrada, excelente proyección y una gran facilidad de ejecución. Está equipado con cuatro pistones en línea de acero inoxidable que proporcionan una acción suave, rápida y precisa. Su campana de gran diámetro produce un sonido cálido, centrado y rico en armónicos, ideal tanto para bandas sinfónicas como para ensambles de metales. Incluye estuche rígido, boquilla, aceite para pistones y paño de limpieza.",
     precio: 10355000,
@@ -805,6 +833,7 @@ const defaultProducts = [
   },
   {
     id: 29,
+    codigo_barras: "0000000000029",
     nombre: "Fagot Schreiber WS5016-2-0",
     descripcion: "Fagot Schreiber S16 WS5016-2-0 de sistema alemán, diseñado para estudiantes avanzados, conservatorios y escuelas de música que buscan un instrumento con características semiprofesionales. Fabricado en madera de arce alpino envejecida durante 10 años, ofrece una afinación precisa, gran proyección y un timbre cálido y equilibrado. Incorpora mejoras técnicas como bloqueador en la llave Whisper, segunda llave de Sib para el dedo anular y llave de trino de Do# para el dedo índice derecho, proporcionando mayor comodidad y versatilidad en la interpretación. Su taladro rediseñado con recubrimiento Luracast protege la madera de la humedad y mejora la respuesta acústica. Incluye estuche rígido con funda exterior tipo mochila y compartimentos para accesorios y partituras. 【1-5c8d83】【2-9cc316】",
     precio: 41705000,
@@ -836,6 +865,7 @@ const defaultProducts = [
   },
   {
     id: 30,
+    codigo_barras: "0000000000030",
     nombre: "Baritono Roy Benson BH-302 RB701468",
     descripcion: "Barítono Roy Benson BH-302 RB701468, instrumento de viento-metal diseñado para estudiantes avanzados, bandas sinfónicas y músicos que buscan una respuesta equilibrada y una construcción robusta. Fabricado en latón con acabado lacado transparente, ofrece una sonoridad cálida y una excelente proyección. Su sistema de 3 pistones frontales de acero inoxidable proporciona una acción suave y precisa, mientras que la campana de gran diámetro contribuye a una emisión sonora rica y potente. Incluye estuche ligero tipo mochila para facilitar el transporte y almacenamiento del instrumento.",
     precio: 3030500,
@@ -868,6 +898,7 @@ const defaultProducts = [
   },
   {
     id: 31,
+    codigo_barras: "0000000000031",
     nombre: "Flauta Piccolo Jupiter JPC-905ES / JPC 1100E",
     descripcion: "Flauta Piccolo Jupiter JPC-1100E diseñada para músicos avanzados que buscan una sonoridad cálida, potente y con gran proyección. Fabricada con cuerpo y cabezal de madera de grenadilla, ofrece una respuesta refinada y una riqueza tonal característica de los instrumentos profesionales. Incorpora mecanismo Split E para mejorar la afinación y respuesta en el registro agudo, especialmente en la nota Mi, mientras que su diseño de taladro cónico favorece una entonación uniforme y una emisión rápida. Las llaves plateadas proporcionan precisión, durabilidad y una ejecución cómoda tanto en bandas sinfónicas como en repertorio de concierto. Incluye estuche de madera estilo francés para una protección segura del instrumento. 【1-440200】【2-75097b】",
     precio: 6165500,
@@ -897,6 +928,7 @@ const defaultProducts = [
   },
   {
     id: 32,
+    codigo_barras: "0000000000032",
     nombre: "Tuba Victory VTU-TGL450R",
     descripcion: "Tuba Victory VTU-TGL450R perteneciente a la serie Triumph, diseñada para intérpretes avanzados, bandas sinfónicas y agrupaciones de metales que requieren una sonoridad potente y una excelente proyección. Afinada en Sib (BBb), cuenta con una construcción robusta en latón lacado en oro que proporciona un sonido profundo, cálido y equilibrado. Su sistema de 4 pistones ofrece una respuesta rápida y una digitación cómoda, permitiendo una ejecución precisa en todos los registros. Incluye estuche rígido para facilitar el transporte y proteger el instrumento durante ensayos y presentaciones.",
     precio: 24605000,
@@ -924,6 +956,7 @@ const defaultProducts = [
   },
   {
     id: 33,
+    codigo_barras: "0000000000033",
     nombre: "Trombone Tenor Victory VTRB-TSGL203",
     descripcion: "Trombón tenor Victory VTRB-TSGL203 perteneciente a la serie Triumph, diseñado para estudiantes avanzados, bandas sinfónicas y músicos que buscan una combinación de potencia, precisión y durabilidad. Construido en latón con acabado Gold Lacquer, proporciona una sonoridad cálida, equilibrada y de excelente proyección. Su vara de deslizamiento ofrece un movimiento suave y preciso, facilitando la interpretación en todos los registros. El diseño de la campana favorece una respuesta uniforme y una proyección clara tanto en ensambles como en presentaciones solistas.",
     precio: 3705000,
@@ -950,6 +983,7 @@ const defaultProducts = [
   },
   {
     id: 34,
+    codigo_barras: "0000000000034",
     nombre: "Melodica Hohner Airboard C944014 32 Key Carbon",
     descripcion: "Melódica Hohner AirBoard Carbon C944014 de 32 teclas, diseñada para músicos modernos que buscan un instrumento portátil, ligero y expresivo. Su diseño inspirado en instrumentos de escenario combina la facilidad de interpretación de un teclado con la expresividad de los instrumentos de viento. Cuenta con una carcasa robusta de color negro tipo carbono, teclado de respuesta cómoda y una boquilla ergonómica que permite tocar de pie o en movimiento. Es ideal para educación musical, ensambles, práctica personal y presentaciones en vivo. Incluye estuche acolchado para transporte seguro.",
     precio: 378100,
@@ -976,6 +1010,7 @@ const defaultProducts = [
   },
   {
     id: 35,
+    codigo_barras: "0000000000035",
     nombre: "Aerofono Digital Roland AE-05",
     descripcion: "Aerófono digital Roland AE-05 GO:LIVECAST, un instrumento de viento electrónico portátil diseñado para principiantes, estudiantes y músicos que desean explorar una amplia variedad de sonidos utilizando una digitación similar a la de instrumentos acústicos tradicionales. Incorpora tecnología SuperNATURAL de Roland, conectividad Bluetooth MIDI y audio, altavoz integrado y una gran selección de sonidos de saxofón, flauta, clarinete, trompeta, violín y sintetizadores. Su diseño ligero y compacto facilita la práctica en cualquier lugar, mientras que la aplicación Aerophone GO Plus amplía las posibilidades de aprendizaje e interpretación.",
     precio: 3231000,
@@ -1004,6 +1039,7 @@ const defaultProducts = [
   },
   {
     id: 36,
+    codigo_barras: "0000000000036",
     nombre: "Trompeta Victory VTRP-TSGL Triumph Series Gold Lacquer",
     descripcion: "Trompeta Victory VTRP-TSGL perteneciente a la serie Triumph, diseñada para músicos que buscan un instrumento con excelente respuesta, proyección y fiabilidad. Afinada en Sib (Bb), combina una construcción robusta en latón con un elegante acabado Gold Lacquer que favorece tanto la estética como la durabilidad. Su diseño permite una emisión clara, articulaciones precisas y una respuesta equilibrada en todos los registros, convirtiéndola en una opción adecuada para estudiantes avanzados, bandas sinfónicas, agrupaciones de jazz y músicos en formación profesional.",
     precio: 3505500,
@@ -1032,6 +1068,30 @@ const defaultProducts = [
 ];
 
 const catalogChangeEvent = "miketstore:catalog-change";
+
+const NUMERIC_BARCODE = /^\d+$/;
+
+/** Genera un código de barras numérico de 13 dígitos a partir del id. */
+export function buildProductBarcode(id) {
+  const numericId = Number(id);
+  const safeId = Number.isFinite(numericId) && numericId > 0 ? numericId : 0;
+  return String(safeId).padStart(13, "0");
+}
+
+export function isValidProductBarcode(value) {
+  return NUMERIC_BARCODE.test(String(value || "").trim());
+}
+
+const normalizeCatalogProduct = (product) => {
+  const rawCode = String(product.codigo_barras || "").trim();
+  const codigo_barras = isValidProductBarcode(rawCode) ? rawCode : buildProductBarcode(product.id);
+  return {
+    ...product,
+    codigo_barras,
+    proveedor: product.proveedor || "Por registrar",
+  };
+};
+
 const readCatalogCollection = (key, fallback) => {
   try {
     const value = window.localStorage.getItem(key);
@@ -1044,13 +1104,19 @@ const readCatalogCollection = (key, fallback) => {
 };
 
 export let categories = readCatalogCollection("miketstore-categories", defaultCategories);
-export let products = readCatalogCollection("miketstore-products", defaultProducts)
-  .map((product) => ({ ...product, proveedor: product.proveedor || "Por registrar" }));
+
+const hadStoredProducts = window.localStorage.getItem("miketstore-products") !== null;
+const rawCatalogProducts = readCatalogCollection("miketstore-products", defaultProducts);
+export let products = rawCatalogProducts.map(normalizeCatalogProduct);
+
+if (hadStoredProducts && rawCatalogProducts.some((product) => !isValidProductBarcode(product?.codigo_barras))) {
+  window.localStorage.setItem("miketstore-products", JSON.stringify(products));
+}
 
 export const getCatalogChangeEvent = () => catalogChangeEvent;
 
 export function saveCatalogProducts(nextProducts) {
-  products = nextProducts;
+  products = nextProducts.map(normalizeCatalogProduct);
   window.localStorage.setItem("miketstore-products", JSON.stringify(products));
   window.dispatchEvent(new Event(catalogChangeEvent));
 }
@@ -1062,10 +1128,11 @@ export function saveCatalogCategories(nextCategories) {
 }
 
 export const demoUser = {
-  id: "demo-user",
-  nombre: "Andrea Tafur",
-  email: "andrea.tafur@miketstore.com",
+  id: "USR-002",
+  nombre: "Andres Tafur",
+  email: "admin@miketstore.com",
   password: "MiKet2026!",
+  id_rol: "administrador",
 };
 
 const userStorageKey = "miketstore-current-user";
@@ -1100,6 +1167,15 @@ function readList(key) {
   }
 }
 
+function toSessionUser(adminUser) {
+  return {
+    id: adminUser.id,
+    nombre: `${adminUser.nombre} ${adminUser.apellidos || ""}`.trim(),
+    email: adminUser.correo,
+    id_rol: adminUser.id_rol,
+  };
+}
+
 export function getCurrentUser() {
   try {
     const rawUser = localStorage.getItem(userStorageKey);
@@ -1107,10 +1183,7 @@ export function getCurrentUser() {
       currentUserCacheRaw = rawUser;
       hasCurrentUserCache = true;
       try {
-        const storedUser = JSON.parse(rawUser || "null");
-        currentUserCacheValue = storedUser?.id === demoUser.id
-          ? { ...storedUser, nombre: demoUser.nombre, email: demoUser.email }
-          : storedUser;
+        currentUserCacheValue = JSON.parse(rawUser || "null");
       } catch {
         currentUserCacheValue = null;
       }
@@ -1121,15 +1194,37 @@ export function getCurrentUser() {
   }
 }
 
+/** Autentica solo empleados activos. Los clientes quedan bloqueados. */
 export function loginDemoUser(email, password) {
-  if (email.trim().toLowerCase() !== demoUser.email || password !== demoUser.password) return false;
-  localStorage.setItem(userStorageKey, JSON.stringify({ id: demoUser.id, nombre: demoUser.nombre, email: demoUser.email }));
+  const normalizedEmail = email.trim().toLowerCase();
+  const adminUser = getAdminUsers().find((user) => String(user.correo || "").toLowerCase() === normalizedEmail);
+
+  if (!adminUser) {
+    return { ok: false, error: "Revisa el correo y la contraseña e inténtalo de nuevo." };
+  }
+
+  if (adminUser.estado !== "Activo") {
+    return { ok: false, error: "Esta cuenta no está activa." };
+  }
+
+  if (!isEmployeeRole(adminUser.id_rol)) {
+    return { ok: false, error: "Los clientes no pueden acceder al panel administrativo." };
+  }
+
+  const expectedPassword = adminUser.contraseña || demoUser.password;
+  if (password !== expectedPassword) {
+    return { ok: false, error: "Revisa el correo y la contraseña e inténtalo de nuevo." };
+  }
+
+  localStorage.setItem(userStorageKey, JSON.stringify(toSessionUser(adminUser)));
+  hasCurrentUserCache = false;
   notifyAuthChange();
-  return true;
+  return { ok: true };
 }
 
 export function logoutDemoUser() {
   localStorage.removeItem(userStorageKey);
+  hasCurrentUserCache = false;
   notifyAuthChange();
 }
 
@@ -1244,7 +1339,7 @@ export function checkoutCart(userId = demoUser.id, paymentMethod = "PSE", option
   };
   localStorage.setItem(ordersKey, JSON.stringify([order, ...getLocalOrders(userId)]));
   localStorage.setItem(userKey("cart", userId), "[]");
-  const saleUser = userId === demoUser.id ? { id: "USR-001", nombre: "Andrea", apellidos: "Tafur" } : { id: userId, nombre: "Cliente" };
+  const saleUser = { id: userId, nombre: "Cliente" };
   recordAdminSale(order, saleUser, { ...options, id_vendedor: options.id_vendedor || "USR-002" });
   const nextProducts = products.map((product) => {
     const quantitySold = cart.filter((item) => item.producto.id === product.id)
@@ -1259,7 +1354,7 @@ export function checkoutCart(userId = demoUser.id, paymentMethod = "PSE", option
     id_referencia: order.id,
     tipo: "Salida por venta",
     unidades: quantity,
-    id_usuario: userId === demoUser.id ? "USR-001" : userId,
+    id_usuario: userId,
   })));
   return order;
 }

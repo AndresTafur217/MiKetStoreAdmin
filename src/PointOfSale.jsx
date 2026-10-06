@@ -71,7 +71,7 @@ export function PointOfSale() {
   const filteredProducts = useMemo(() => {
     const term = query.trim().toLocaleLowerCase();
     return products.filter((product) => {
-      const matchesQuery = !term || `${product.nombre} ${product.proveedor || ""} ${product.id}`.toLocaleLowerCase().includes(term);
+      const matchesQuery = !term || `${product.nombre} ${product.codigo_barras || ""} ${product.proveedor || ""} ${product.id}`.toLocaleLowerCase().includes(term);
       const matchesCategory = !categoryId || product.categorias?.some((category) => category.id === Number(categoryId));
       return matchesQuery && matchesCategory;
     });
@@ -469,7 +469,7 @@ export function PointOfSale() {
               </option>
             )}
           </select>
-          <div className="max-h-[27rem] space-y-2 overflow-y-auto scrollbar pr-1">
+          <div className="max-h-[27rem] space-y-2 overflow-y-auto scrollbar pr-1 scrollbar">
             {filteredProducts.map((product) =>
               <button key={product.id} type="button" disabled={product.stock < 1} onClick={() => addProduct(product)}
                 className="flex w-full items-center justify-between gap-3 rounded-xl border border-gray-200 p-3 text-left transition-colors 

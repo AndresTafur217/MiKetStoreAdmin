@@ -33,6 +33,7 @@ const seedUsers = [
     id_rol: "cliente",
     correo: "andres.tafur@miketstore.com",
     telefono: "3000000001",
+    contraseña: "MiKet2026!",
     contraseña_hash: "demo-hash-no-autenticable",
     fecha_de_ingreso: "2026-08-01",
     estado: "Activo",
@@ -47,6 +48,7 @@ const seedUsers = [
     id_rol: "administrador",
     correo: "admin@miketstore.com",
     telefono: "3000000002",
+    contraseña: "MiKet2026!",
     contraseña_hash: "demo-hash-no-autenticable",
     fecha_de_ingreso: "2026-01-10",
     estado: "Activo",
@@ -164,6 +166,10 @@ const buildSalesRelations = (sales) => ({
 });
 
 export const getAdminDataChangeEvent = () => dataChangeEvent;
+
+export const EMPLOYEE_ROLE_IDS = ["administrador", "supervisor", "operador", "colaborador"];
+
+export const isEmployeeRole = (roleId) => EMPLOYEE_ROLE_IDS.includes(roleId);
 
 export const getAdminUsers = () => readCollection("miketstore-admin-users", seedUsers);
 export const saveAdminUsers = (users) => saveCollection("miketstore-admin-users", users);

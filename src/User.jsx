@@ -99,7 +99,7 @@ export function User() {
           <h1 className="mt-1 text-2xl font-bold">{user.nombre}</h1>
           <p className="mt-1">{user.email}</p>
         </div>
-        <span className="border border-emerald-700 px-3 py-1 text-sm text-emerald-800">Sesión activa</span>
+        <span className="border border-emerald-700 px-3 py-1 text-sm text-emerald-800 rounded-1xl">Sesión activa</span>
       </div>
 
       <dl className="grid gap-x-8 gap-y-4 border-b border-gray-300 py-5 sm:grid-cols-2">
@@ -138,7 +138,7 @@ export function User() {
             <h2 className="font-semibold">Direcciones de entrega</h2>
             <p className="text-sm text-gray-600">Administra aquí tus direcciones y selecciona la predeterminada.</p>
           </div>
-          <button type="button" onClick={() => openAddressEditor()} className="border border-gray-400 px-3 py-2 text-sm">Agregar dirección</button>
+          <button type="button" onClick={() => openAddressEditor()} className="border border-gray-400 px-3 py-2 text-sm rounded-1xl transition-all duration-300 hover:scale-105 hover:bg-black/50 hover:text-white">Agregar dirección</button>
         </div>
         {ownedAddresses.length === 0 ?
           <p className="py-3 text-sm text-gray-600">Aún no tienes direcciones guardadas.</p> :
@@ -170,11 +170,11 @@ export function User() {
       </section>
 
       <div className="mt-5 flex flex-wrap gap-3">
-        <button type="button" onClick={handleLogout} className="border border-gray-400 px-4 py-2">Cerrar sesión</button>
-        <button type="button" onClick={() => changeAccountStatus("Suspendido")} className="border border-amber-700 px-4 py-2 text-amber-900">Suspender cuenta</button>
-        <button type="button" onClick={() => changeAccountStatus("Eliminado")} className="border border-red-700 px-4 py-2 text-red-800">Eliminar cuenta</button>
+        <button type="button" onClick={handleLogout} className="border border-gray-400 px-4 py-2 rounded-1xl transition-all duration-300 hover:scale-105 hover:bg-black/50 hover:text-white">Cerrar sesión</button>
+        <button type="button" onClick={() => changeAccountStatus("Suspendido")} className="border border-amber-700 px-4 py-2 text-amber-900 rounded-1xl transition-all duration-300 hover:scale-105 hover:bg-amber-700/50 hover:text-white">Suspender cuenta</button>
+        <button type="button" onClick={() => changeAccountStatus("Eliminado")} className="border border-red-700 px-4 py-2 text-red-800 rounded-1xl transition-all duration-300 hover:scale-105 hover:bg-red-700/50 hover:text-white">Eliminar cuenta</button>
       </div>
-      <Link to="/" className="ml-4 text-sm underline">Volver a la tienda</Link>
+      <Link to="/" className="ml-4 text-sm underline transition-all duration-300 hover:scale-105 hover:text-primary">Volver a la tienda</Link>
 
       {addressEditorOpen && createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-4" onClick={(event) => { if (event.target === event.currentTarget) setAddressEditorOpen(false); }}>

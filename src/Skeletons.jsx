@@ -71,17 +71,99 @@ function CategoryGrid({ compact = false }) {
   );
 }
 
+function PageHeaderSkeleton({ titleWidth = "w-32" }) {
+  return (
+    <section aria-hidden="true" className="mb-5 flex h-20 w-full items-center gap-3 rounded-3xl border border-border-gray bg-surface-alt p-2.5 shadow-md">
+      <Block className="size-14 shrink-0 rounded-1xl" />
+      <Block className={`h-5 ${titleWidth} rounded`} />
+    </section>
+  );
+}
+
+function ToolbarSkeleton() {
+  return (
+    <div aria-hidden="true" className="mb-4 flex w-full flex-wrap items-center gap-2.5">
+      <Block className="h-10 w-48 rounded-xl" />
+      <Block className="h-10 w-32 rounded-xl" />
+      <Block className="h-10 w-28 rounded-xl" />
+      <Block className="ml-auto h-10 w-36 rounded-xl" />
+    </div>
+  );
+}
+
+function TabsSkeleton({ count = 4 }) {
+  return (
+    <div aria-hidden="true" className="mb-4 flex flex-wrap gap-2">
+      {Array.from({ length: count }, (_, index) => (
+        <Block key={index} className="h-9 w-24 rounded-xl" />
+      ))}
+    </div>
+  );
+}
+
+function TableSkeleton({ columns = 5, rows = 6 }) {
+  return (
+    <div aria-hidden="true" className="overflow-hidden rounded-2xl border border-gray-300">
+      <div className="grid gap-3 border-b border-gray-200 bg-slate-100 px-3 py-3" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
+        {Array.from({ length: columns }, (_, index) => <Block key={index} className="h-3 w-full rounded" />)}
+      </div>
+      <div className="divide-y divide-gray-200">
+        {Array.from({ length: rows }, (_, rowIndex) => (
+          <div key={rowIndex} className="grid gap-3 px-3 py-4" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
+            {Array.from({ length: columns }, (_, colIndex) => <Block key={colIndex} className="h-4 w-full rounded" />)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StatsRowSkeleton({ count = 4 }) {
+  return (
+    <div aria-hidden="true" className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {Array.from({ length: count }, (_, index) => (
+        <div key={index} className="rounded-2xl border border-gray-300 bg-white p-4">
+          <Block className="h-3 w-24 rounded" />
+          <Block className="mt-3 h-7 w-16 rounded" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function HomeSkeleton() {
   return (
-    <div className="flex h-max w-full flex-col items-center gap-7.5">
-      <section aria-hidden="true" className="h-90 w-full overflow-hidden p-5">
-        <Block className="h-full w-full rounded-4xl" />
-      </section>
-      <section className="w-full p-2.5"><CategoryGrid compact /></section>
-      <section className="w-full space-y-4">
-        <Block className="h-6 w-48 rounded" />
-        <ProductGrid count={4} />
-      </section>
+    <div className="flex h-max w-full flex-col gap-5">
+      <PageHeaderSkeleton titleWidth="w-24" />
+      <div className="flex flex-col gap-5 rounded-3xl border border-border-gray p-5">
+        <StatsRowSkeleton count={4} />
+        <div className="flex flex-col gap-5 lg:flex-row">
+          <div className="flex-1 space-y-3 rounded-2xl border border-gray-200 p-4">
+            <Block className="h-5 w-40 rounded" />
+            {Array.from({ length: 4 }, (_, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <Block className="size-12 shrink-0 rounded-xl" />
+                <div className="flex-1 space-y-2">
+                  <Block className="h-4 w-3/4 rounded" />
+                  <Block className="h-3 w-1/2 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex-1 space-y-3 rounded-2xl border border-gray-200 p-4">
+            <Block className="h-5 w-44 rounded" />
+            {Array.from({ length: 3 }, (_, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <Block className="size-12 shrink-0 rounded-xl" />
+                <div className="flex-1 space-y-2">
+                  <Block className="h-4 w-2/3 rounded" />
+                  <Block className="h-3 w-1/3 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -89,6 +171,7 @@ function HomeSkeleton() {
 function CatalogSkeleton({ favorites = false }) {
   return (
     <div className="flex flex-col gap-4">
+      <PageHeaderSkeleton titleWidth="w-36" />
       <div aria-hidden="true" className="flex w-full flex-wrap items-center gap-2.5 p-2.5">
         <Block className="h-9 w-24 rounded-xl" />
         <Block className="h-9 w-32 rounded-xl" />
@@ -104,6 +187,7 @@ function CatalogSkeleton({ favorites = false }) {
 function CartSkeleton() {
   return (
     <section aria-hidden="true" className="mx-auto w-full max-w-5xl">
+      <PageHeaderSkeleton titleWidth="w-28" />
       <div className="mb-6 flex items-end justify-between border-b border-gray-300 pb-4">
         <div className="flex flex-col gap-2">
           <Block className="h-7 w-52 rounded" />
@@ -139,6 +223,7 @@ function CartSkeleton() {
 function ListSkeleton({ profile = false }) {
   return (
     <section aria-hidden="true" className={`mx-auto w-full ${profile ? "max-w-3xl py-6" : "max-w-5xl"}`}>
+      <PageHeaderSkeleton titleWidth={profile ? "w-24" : "w-36"} />
       <Block className="mb-6 h-7 w-56 rounded" />
       {profile ? (
         <>
@@ -168,6 +253,84 @@ function ListSkeleton({ profile = false }) {
   );
 }
 
+function SalesSkeleton() {
+  return (
+    <div className="w-full space-y-4">
+      <PageHeaderSkeleton titleWidth="w-28" />
+      <ToolbarSkeleton />
+      <StatsRowSkeleton count={3} />
+      <TableSkeleton columns={6} rows={7} />
+    </div>
+  );
+}
+
+function UsersSkeleton() {
+  return (
+    <div className="w-full space-y-4">
+      <PageHeaderSkeleton titleWidth="w-32" />
+      <TabsSkeleton count={3} />
+      <ToolbarSkeleton />
+      <TableSkeleton columns={5} rows={6} />
+    </div>
+  );
+}
+
+function InventorySkeleton() {
+  return (
+    <div className="w-full space-y-4">
+      <PageHeaderSkeleton titleWidth="w-36" />
+      <TabsSkeleton count={6} />
+      <StatsRowSkeleton count={4} />
+      <TableSkeleton columns={6} rows={8} />
+    </div>
+  );
+}
+
+function PosSkeleton() {
+  return (
+    <div className="grid w-full gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <div className="space-y-4 rounded-2xl border border-gray-300 p-4">
+        <div className="flex flex-wrap gap-2">
+          <Block className="h-11 flex-1 rounded-xl" />
+          <Block className="h-11 w-28 rounded-xl" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {Array.from({ length: 6 }, (_, index) => (
+            <div key={index} className="rounded-xl border border-gray-200 p-3">
+              <Block className="mb-2 aspect-square w-full rounded-lg" />
+              <Block className="h-4 w-full rounded" />
+              <Block className="mt-2 h-3 w-2/3 rounded" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-4 rounded-2xl border border-gray-300 p-4">
+        <Block className="h-6 w-40 rounded" />
+        {Array.from({ length: 4 }, (_, index) => (
+          <div key={index} className="flex items-center justify-between gap-3">
+            <Block className="h-4 w-2/3 rounded" />
+            <Block className="h-8 w-20 rounded" />
+          </div>
+        ))}
+        <Block className="mt-6 h-12 w-full rounded-xl" />
+        <div className="grid grid-cols-3 gap-2">
+          {Array.from({ length: 12 }, (_, index) => <Block key={index} className="h-12 rounded-xl" />)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CategoriesSkeleton() {
+  return (
+    <div className="w-full space-y-4">
+      <PageHeaderSkeleton titleWidth="w-40" />
+      <ToolbarSkeleton />
+      <CategoryGrid />
+    </div>
+  );
+}
+
 export function PageSkeleton({ variant = "products" }) {
   let content;
 
@@ -176,7 +339,7 @@ export function PageSkeleton({ variant = "products" }) {
       content = <HomeSkeleton />;
       break;
     case "categories":
-      content = <div className="w-full"><Block className="mb-5 h-8 w-44 rounded" /><CategoryGrid /></div>;
+      content = <CategoriesSkeleton />;
       break;
     case "favorites":
       content = <CatalogSkeleton favorites />;
@@ -189,6 +352,18 @@ export function PageSkeleton({ variant = "products" }) {
       break;
     case "profile":
       content = <ListSkeleton profile />;
+      break;
+    case "sales":
+      content = <SalesSkeleton />;
+      break;
+    case "users":
+      content = <UsersSkeleton />;
+      break;
+    case "inventory":
+      content = <InventorySkeleton />;
+      break;
+    case "pos":
+      content = <PosSkeleton />;
       break;
     default:
       content = <CatalogSkeleton />;

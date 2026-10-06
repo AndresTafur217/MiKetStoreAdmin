@@ -1,31 +1,35 @@
 import { Link, useLocation } from "react-router-dom";
 import { ProtectedLink } from "./auth/ProtectedLink";
 
+const matchesPath = (pathname, paths) => paths.includes(pathname);
+
+const mobileItemClass = (active) =>
+  `size-10 md:size-12 rounded-1xl transition-all duration-300 text-gray-950 hover:bg-accent hover:shadow-md hover:scale-105 ${active ? "bg-accent shadow-md" : "bg-surface"}`;
+
 export function Menu() {
-  const location = useLocation();
-  const isHome = location.pathname === "/";
-  const isProducts = location.pathname === "/products";
-  const isCategories = location.pathname === "/categories";
-  const isSales = location.pathname === "/sales";
-  const isInventory = location.pathname === "/inventory";
-  const isUsers = location.pathname === "/users";
-  const isOrders = location.pathname === "/orders";
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  const isProducts = matchesPath(pathname, ["/products", "/productos"]);
+  const isCategories = matchesPath(pathname, ["/categories", "/categorias"]);
+  const isSales = matchesPath(pathname, ["/sales", "/ventas"]);
+  const isInventory = pathname === "/inventory";
+  const isUsers = matchesPath(pathname, ["/users", "/usuarios"]);
+  const isOrders = matchesPath(pathname, ["/orders", "/pedidos"]);
+
   return (
     <div className="h-full w-full flex flex-row lg:flex-col justify-center items-end lg:justify-start">
 
       <section className="lg:hidden w-full max-w-3xl border-b-2 pb-2.5 border-b-gray-400 px-3.5 flex flex-row justify-evenly items-center">
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
-          <Link to="/" className="h-full w-full flex justify-center items-center">
+        <article className={mobileItemClass(isHome)}>
+          <Link to="/" aria-label="Inicio" title="Inicio" className="h-full w-full flex justify-center items-center">
             <svg className="size-5 md:size-6 ">
               <use xlinkHref="/sprite.svg#house" />
             </svg>
           </Link>
         </article>
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
+        <article className={mobileItemClass(isProducts)}>
           <Link to="/products" aria-label="Productos" title="Productos" className="h-full w-full flex justify-center items-center">
             <svg className="size-5 md:size-6 ">
               <use xlinkHref="/sprite.svg#tags" />
@@ -33,8 +37,7 @@ export function Menu() {
           </Link>
         </article>
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
+        <article className={mobileItemClass(isCategories)}>
           <Link to="/categories" aria-label="Categorías" title="Categorías" className="h-full w-full flex justify-center items-center">
             <svg className="size-5 md:size-6 ">
               <use xlinkHref="/sprite.svg#categories" />
@@ -42,9 +45,8 @@ export function Menu() {
           </Link>
         </article>
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
-          <ProtectedLink to="/favorites" aria-label="Favoritos" title="Favoritos" className="h-full w-full flex justify-center items-center rounded-full">
+        <article className={mobileItemClass(isSales)}>
+          <ProtectedLink to="/sales" aria-label="Ventas" title="Ventas" className="h-full w-full flex justify-center items-center rounded-full">
             <div className="h-full w-full flex justify-center items-center">
               <svg className="size-5 md:size-6 ">
                 <use xlinkHref="/sprite.svg#shop" />
@@ -53,9 +55,8 @@ export function Menu() {
           </ProtectedLink>
         </article>
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
-          <ProtectedLink to="/shoppings" aria-label="Carrito" title="Carrito" className="h-full w-full rounded-full flex justify-center items-center">
+        <article className={mobileItemClass(isInventory)}>
+          <ProtectedLink to="/inventory" aria-label="Inventario" title="Inventario" className="h-full w-full rounded-full flex justify-center items-center">
             <div className="h-full w-full flex justify-center items-center">
               <svg className="size-5 md:size-6 ">
                 <use xlinkHref="/sprite.svg#inventory" />
@@ -64,8 +65,7 @@ export function Menu() {
           </ProtectedLink>
         </article>
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
+        <article className={mobileItemClass(isUsers)}>
           <ProtectedLink to="/users" aria-label="Usuarios" title="Usuarios" className="h-full w-full flex justify-center items-center">
             <div className="h-full w-full flex justify-center items-center">
               <svg className="size-5 md:size-6 ">
@@ -75,9 +75,8 @@ export function Menu() {
           </ProtectedLink>
         </article>
 
-        <article className="size-10 bg-surface md:size-12 rounded-1xl transition-all duration-300 text-gray-950
-          hover:bg-accent hover:shadow-md hover:scale-105">
-          <Link to="/sales" aria-label="Ventas" title="Ventas" className="h-full w-full flex justify-center items-center">
+        <article className={mobileItemClass(isOrders)}>
+          <Link to="/orders" aria-label="Pedidos" title="Pedidos" className="h-full w-full flex justify-center items-center">
             <div className="h-full w-full flex justify-center items-center">
               <svg className="size-5 md:size-6 ">
                 <use xlinkHref="/sprite.svg#orders" />

@@ -296,10 +296,11 @@ export function Inventory() {
           <div><p className="text-sm text-gray-500">Stock esperado</p><strong className="text-xl">{totalExpectedUnits}</strong></div>
           <div><p className="text-sm text-gray-500">Referencias con poco stock</p><strong className="text-xl">{lowStockProducts.length}</strong></div>
         </div>
-        <div className="overflow-x-auto border-y border-gray-300">
-          <table className="w-full min-w-[1150px] text-left text-sm">
+        <div className="overflow-x-auto border-y border-gray-300 scrollbar">
+          <table className="w-full min-w-[1250px] text-left text-sm">
             <thead className="bg-slate-100 text-xs uppercase text-gray-600">
               <tr>
+                <th className="px-3 py-3">Código</th>
                 <th className="px-3 py-3">Producto</th>
                 <th className="px-3 py-3">Categoría</th>
                 <th className="px-3 py-3">Proveedor</th>
@@ -316,6 +317,7 @@ export function Inventory() {
               {inventoryBalances.map(({ product, opening, purchased, sold, adjustments, expected, difference }) => {
                 const supplier = data.suppliers.find((item) => item.id === product.id_proveedor);
                 return <tr key={product.id}>
+                  <td className="px-3 py-3 font-mono text-xs">{product.codigo_barras || "—"}</td>
                   <td className="px-3 py-3 font-medium">{product.nombre}</td>
                   <td className="px-3 py-3">{product.categorias?.map((category) => category.nombre).join(", ") || "Sin categoría"}</td>
                   <td className="px-3 py-3">{supplier?.nombre || product.proveedor || "Por registrar"}</td>
@@ -334,7 +336,7 @@ export function Inventory() {
         </div>
       </>}
 
-      {activeTab === "Conteos" && <div className="overflow-x-auto border-y border-gray-300">
+      {activeTab === "Conteos" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
         <table className="w-full min-w-[760px] text-left text-sm">
           <thead className="bg-slate-100 text-xs uppercase text-gray-600">
             <tr>
@@ -381,7 +383,7 @@ export function Inventory() {
         </table>
         {selectedInventoryId && <div className="border-t border-gray-200 p-4">
           <h2 className="mb-3 font-semibold">Detalle del inventario {selectedInventoryId}</h2>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto scrollbar">
             <table className="w-full min-w-[700px] text-left text-sm">
               <thead className="text-xs uppercase text-gray-500">
                 <tr>
@@ -410,7 +412,7 @@ export function Inventory() {
         </div>}
       </div>}
 
-      {activeTab === "Movimientos" && <div className="overflow-x-auto border-y border-gray-300">
+      {activeTab === "Movimientos" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
         <table className="w-full min-w-[800px] text-left text-sm">
           <thead className="bg-slate-100 text-xs uppercase text-gray-600">
             <tr>
@@ -446,7 +448,7 @@ export function Inventory() {
         </table>
       </div>}
 
-      {activeTab === "Proveedores" && <div className="overflow-x-auto border-y border-gray-300">
+      {activeTab === "Proveedores" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
         <table className="w-full min-w-[760px] text-left text-sm">
           <thead className="bg-slate-100 text-xs uppercase text-gray-600">
             <tr>
@@ -501,7 +503,7 @@ export function Inventory() {
         </table>
       </div>}
 
-      {activeTab === "Compras" && <div className="overflow-x-auto border-y border-gray-300">
+      {activeTab === "Compras" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
         <table className="w-full min-w-[780px] text-left text-sm">
           <thead className="bg-slate-100 text-xs uppercase text-gray-600">
             <tr>
@@ -558,7 +560,7 @@ export function Inventory() {
         </table>
         {selectedOrderId && <div className="border-t border-gray-200 p-4">
           <h2 className="mb-3 font-semibold">Detalle del pedido {selectedOrderId}</h2>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto scrollbar">
             <table className="w-full min-w-[580px] text-left text-sm">
               <thead className="text-xs uppercase text-gray-500">
                 <tr>
@@ -585,7 +587,7 @@ export function Inventory() {
         </div>}
       </div>}
 
-      {activeTab === "Lotes" && <div className="overflow-x-auto border-y border-gray-300">
+      {activeTab === "Lotes" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
         <table className="w-full min-w-[700px] text-left text-sm">
           <thead className="bg-slate-100 text-xs uppercase text-gray-600">
             <tr>
@@ -622,7 +624,7 @@ export function Inventory() {
               <p className="text-sm text-gray-500">Conciliación de existencias</p>
               <h2 className="text-xl font-bold">Conteo</h2>
             </div>
-            <div className="overflow-x-auto border-y border-gray-200">
+            <div className="overflow-x-auto border-y border-gray-200 scrollbar">
               <table className="w-full min-w-[600px] text-left text-sm">
                 <thead className="bg-slate-100 text-xs uppercase text-gray-600">
                   <tr>
@@ -632,17 +634,21 @@ export function Inventory() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {stockCounts.map((count, index) =>
-                    <tr key={count.productId}>
-                      <td className="px-3 py-2">{products.find((product) => product.id === count.productId)?.nombre || "Producto eliminado"}</td>
+                  {stockCounts.map((count, index) => {
+                    const countedProduct = products.find((product) => product.id === count.productId);
+                    return <tr key={count.productId}>
+                      <td className="px-3 py-2">
+                        <span className="block font-medium">{countedProduct?.nombre || "Producto eliminado"}</span>
+                        {countedProduct?.codigo_barras && <span className="text-xs text-gray-500">{countedProduct.codigo_barras}</span>}
+                      </td>
                       <td className="px-3 py-2">{count.systemStock}</td>
                       <td className="px-3 py-2">
                         <input aria-label={`Conteo producto ${count.productId}`} required min="0" step="1" type="number" value={count.stock}
                           onChange={(event) => setStockCounts((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, stock: event.target.value } : item))}
                           className="w-32 border border-gray-300 p-2" />
                       </td>
-                    </tr>
-                  )}
+                    </tr>;
+                  })}
                 </tbody>
               </table>
             </div>
@@ -659,7 +665,7 @@ export function Inventory() {
 
       {supplierEditorOpen && createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-4" onClick={(event) => { if (event.target === event.currentTarget) setSupplierEditorOpen(false); }}>
-          <form onSubmit={saveSupplier} className="max-h-[90dvh] w-full max-w-xl space-y-4 overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl">
+          <form onSubmit={saveSupplier} className="max-h-[90dvh] w-full max-w-xl space-y-4 overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl scrollbar">
             <h2 className="text-xl font-bold">{editingSupplier ? "Editar proveedor" : "Agregar proveedor"}</h2>
             <div className="grid gap-3 sm:grid-cols-2">
               {[["nombre", "Nombre"], ["apellidos", "Apellidos"], ["correo", "Correo"], ["telefono", "Teléfono"]].map(([key, label]) =>
@@ -700,7 +706,7 @@ export function Inventory() {
 
       {orderEditorOpen && createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-3 sm:p-6" onClick={(event) => { if (event.target === event.currentTarget) setOrderEditorOpen(false); }}>
-          <form onSubmit={saveOrder} className="max-h-[92dvh] w-full max-w-3xl space-y-4 overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7">
+          <form onSubmit={saveOrder} className="max-h-[92dvh] w-full max-w-3xl space-y-4 overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7 scrollbar">
             <div>
               <p className="text-sm text-gray-500">Abastecimiento</p>
               <h2 className="text-xl font-bold">Crear pedido de tienda</h2>
@@ -711,7 +717,7 @@ export function Inventory() {
                   <select required value={line.productId} onChange={(event) => updateOrderLine(index, "productId", event.target.value)}
                     className="mt-1 w-full border border-gray-300 bg-white p-2">
                     {products.map((product) =>
-                      <option key={product.id} value={product.id}>{product.nombre}
+                      <option key={product.id} value={product.id}>{product.codigo_barras ? `${product.codigo_barras} · ` : ""}{product.nombre}
                       </option>
                     )}
                   </select>

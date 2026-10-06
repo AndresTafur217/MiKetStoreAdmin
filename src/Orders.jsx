@@ -52,12 +52,18 @@ export function Orders() {
     }
 
     return (
-        <section className="mx-auto w-full max-w-5xl">
-            <h1 className="mb-6 text-2xl font-bold">Pedidos realizados</h1>
+        <section className="mx-auto w-full flex flex-col gap-5">
+            <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
+                <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+                <svg className="size-7">
+                    <use xlinkHref="/sprite.svg#orders" />
+                </svg>
+                </article>
+                <span className="flex-1 px-2 font-bold transition-all duration-300">Pedidos realizados</span>
+            </section>
             {orders.length === 0 ? (
                 <div className="border-y border-gray-300 py-12 text-center">
                     <p className="text-lg font-medium">Todavía no tienes pedidos</p>
-                    <p className="mt-2 text-sm text-gray-600">Cuando confirmes el carrito, el pedido aparecerá aquí.</p>
                 </div>
             ) : (
                 <div className="divide-y divide-gray-300 border-y border-gray-300">

@@ -2,8 +2,23 @@ import { useState, useMemo, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getAdminDataChangeEvent, getAdminSales, getPurchasingData } from "./data/adminData";
-import { categories as catalogCategories, getCatalogChangeEvent, products as catalogProducts, saveCatalogProducts } from "./data/catalog";
+import { buildProductBarcode, categories as catalogCategories, getCatalogChangeEvent, isValidProductBarcode, products as catalogProducts, saveCatalogProducts } from "./data/catalog";
 import { SkeletonImage } from "./Skeletons";
+
+const emptyProductForm = {
+  nombre: "",
+  codigo_barras: "",
+  descripcion: "",
+  precio: "",
+  descuento: "0",
+  stock: "0",
+  estado: "disponible",
+  proveedor: "",
+  supplierId: "",
+  categoriaId: "",
+  especificaciones: "",
+  imagen: "",
+};
 
 export function Products() {
   const [products, setProducts] = useState(() => catalogProducts);
@@ -15,7 +30,7 @@ export function Products() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [productEditorOpen, setProductEditorOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const [productForm, setProductForm] = useState({ nombre: "", descripcion: "", precio: "", descuento: "0", stock: "0", estado: "disponible", proveedor: "", supplierId: "", categoriaId: "", especificaciones: "", imagen: "" });
+  const [productForm, setProductForm] = useState(emptyProductForm);
 
   const [filters, setFilters] = useState({
     selectedCategories: searchParams.has("category") ? [Number(searchParams.get("category"))] : [],
@@ -38,8 +53,11 @@ export function Products() {
 
   const openProductEditor = (product = null) => {
     setEditingProduct(product);
+    const nextId = Math.max(0, ...products.map((item) => Number(item.id) || 0)) + 1;
     setProductForm(product ? {
+      ...emptyProductForm,
       nombre: product.nombre,
+      codigo_barras: product.codigo_barras || buildProductBarcode(product.id),
       descripcion: product.descripcion || "",
       precio: String(product.precio),
       descuento: String(product.descuento || 0),
@@ -51,8 +69,9 @@ export function Products() {
       especificaciones: product.especificaciones?.map((item) => item.nombre).join("\n") || "",
       imagen: product.imagenes?.[0]?.url || "",
     } : {
-      nombre: "", descripcion: "", precio: "", descuento: "0", stock: "0", estado: "disponible",
-      proveedor: "", supplierId: "", categoriaId: String(categories[0]?.id || ""), especificaciones: "", imagen: "",
+      ...emptyProductForm,
+      codigo_barras: buildProductBarcode(nextId),
+      categoriaId: String(categories[0]?.id || ""),
     });
     setProductEditorOpen(true);
   };
@@ -61,10 +80,23 @@ export function Products() {
     event.preventDefault();
     const category = categories.find((item) => item.id === Number(productForm.categoriaId));
     const supplier = suppliers.find((item) => item.id === productForm.supplierId);
+    const nextId = editingProduct?.id || Math.max(0, ...products.map((item) => Number(item.id) || 0)) + 1;
+    const codigoBarras = productForm.codigo_barras.trim() || buildProductBarcode(nextId);
+    if (!isValidProductBarcode(codigoBarras)) {
+      window.alert("El código de barras solo puede contener números.");
+      return;
+    }
+    const codigoDuplicado = products.some((item) => item.id !== nextId
+      && String(item.codigo_barras || "") === codigoBarras);
+    if (codigoDuplicado) {
+      window.alert("Ya existe un producto con ese código de barras / referencia.");
+      return;
+    }
     const product = {
       ...editingProduct,
-      id: editingProduct?.id || Math.max(0, ...products.map((item) => Number(item.id) || 0)) + 1,
+      id: nextId,
       nombre: productForm.nombre.trim(),
+      codigo_barras: codigoBarras,
       descripcion: productForm.descripcion.trim(),
       precio: Number(productForm.precio),
       descuento: Number(productForm.descuento) || 0,
@@ -152,8 +184,10 @@ export function Products() {
       if (searchTerm) {
         const searchableText = [
           product.nombre,
+          product.codigo_barras,
           product.descripcion,
           product.proveedor,
+          String(product.id),
           ...(product.categorias || []).map(category => category.nombre),
           ...(product.especificaciones || []).map(specification => specification.nombre),
         ].join(" ").toLocaleLowerCase();
@@ -307,7 +341,7 @@ export function Products() {
             {/* Filtro por categorías */}
             <div className="space-y-2">
               <h4 className="font-medium text-gray-800">Categorías</h4>
-              <div className="max-h-32 overflow-y-auto space-y-1">
+              <div className="max-h-32 overflow-y-auto space-y-1 scrollbar">
                 {categories.map(category => (
                   <label key={category.id} className="flex items-center space-x-2 text-sm">
                     <input
@@ -325,7 +359,7 @@ export function Products() {
             {/* Filtro por especificaciones */}
             <div className="space-y-2">
               <h4 className="font-medium text-gray-800">Especificaciones</h4>
-              <div className="max-h-32 overflow-y-auto space-y-1">
+              <div className="max-h-32 overflow-y-auto space-y-1 scrollbar">
                 {uniqueSpecs.map(spec => (
                   <label key={spec} className="flex items-center space-x-2 text-sm">
                     <input
@@ -504,6 +538,21 @@ export function Products() {
                 <input required value={productForm.nombre} onChange={(event) => setProductForm({ ...productForm, nombre: event.target.value })} 
                   className="mt-1 w-full border border-gray-300 p-2" />
               </label>
+              <label className="text-sm font-medium">Código de barras / referencia
+                <input
+                  required
+                  inputMode="numeric"
+                  pattern="[0-9]+"
+                  title="Solo números"
+                  value={productForm.codigo_barras}
+                  onChange={(event) => setProductForm({
+                    ...productForm,
+                    codigo_barras: event.target.value.replace(/\D/g, ""),
+                  })}
+                  placeholder="0000000000001"
+                  className="mt-1 w-full border border-gray-300 p-2"
+                />
+              </label>
               <label className="text-sm font-medium">Proveedor
                 <input required value={productForm.proveedor} onChange={(event) => setProductForm({ ...productForm, proveedor: event.target.value })} 
                   className="mt-1 w-full border border-gray-300 p-2" />
@@ -667,6 +716,10 @@ export function Products() {
                 )}
 
                 <div className="grid grid-cols-2 gap-3 border-t border-gray-100 pt-4 text-sm">
+                  <div>
+                    <p className="text-xs font-medium uppercase text-gray-500">Código de barras</p>
+                    <p className="mt-1 font-medium text-gray-800">{selectedProduct.codigo_barras || "Sin etiqueta"}</p>
+                  </div>
                   <div>
                     <p className="text-xs font-medium uppercase text-gray-500">Calificación</p>
                     <p className="mt-1 font-medium text-gray-800">

@@ -40,8 +40,9 @@ export function AuthModalProvider({ children }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!loginDemoUser(email, password)) {
-      setError("Revisa el correo y la contraseña e inténtalo de nuevo.");
+    const result = loginDemoUser(email, password);
+    if (!result.ok) {
+      setError(result.error);
       return;
     }
 
@@ -66,6 +67,7 @@ export function AuthModalProvider({ children }) {
               <div>
                 <p className="text-sm text-gray-500">MiKet Store</p>
                 <h2 id="login-title" className="mt-1 text-2xl font-bold">Iniciar sesión</h2>
+                <p className="mt-1 text-sm text-gray-600">Solo empleados</p>
               </div>
               <button type="button" aria-label="Cerrar ventana de inicio de sesión" onClick={closeModal} className="size-9 flex justify-center items-center hover:scale-105 hover:border hover:border-gray-300 text-xl leading-none hover:bg-gray-100 rounded-full">
                 <svg className="size-5">
@@ -75,13 +77,13 @@ export function AuthModalProvider({ children }) {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <label className="flex flex-col gap-1.5 text-sm font-medium" htmlFor="login-email">
+              <label className="flex flex-col gap-1.5 text-sm font-medium" htmlFor="modal-login-email">
                 Correo electrónico
-                <input id="login-email" type="email" autoComplete="username" autoFocus required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full border border-gray-300 px-3 py-2.5 font-normal outline-none focus:border-gray-800" />
+                <input id="modal-login-email" type="email" autoComplete="username" autoFocus required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full border border-gray-300 px-3 py-2.5 font-normal outline-none focus:border-gray-800" />
               </label>
-              <label className="flex flex-col gap-1.5 text-sm font-medium" htmlFor="login-password">
+              <label className="flex flex-col gap-1.5 text-sm font-medium" htmlFor="modal-login-password">
                 Contraseña
-                <input id="login-password" type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full border border-gray-300 px-3 py-2.5 font-normal outline-none focus:border-gray-800" />
+                <input id="modal-login-password" type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full border border-gray-300 px-3 py-2.5 font-normal outline-none focus:border-gray-800" />
               </label>
               {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
               <button type="submit" className="mt-1 w-full px-4 py-3 font-semibold border rounded-1xl border-border-gray hover:bg-gray-100 hover:scale-105">Iniciar sesión</button>
