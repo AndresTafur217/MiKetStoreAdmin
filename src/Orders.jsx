@@ -46,7 +46,7 @@ export function Orders() {
             <section className="mx-auto flex max-w-2xl flex-col items-center gap-4 py-16 text-center">
                 <h1 className="text-2xl font-bold">Mis pedidos</h1>
                 <p className="text-gray-600">Inicia sesión para consultar tus pedidos.</p>
-                <Link to="/perfil" className="border border-gray-400 px-4 py-2 hover:bg-store-items2">Ir a mi cuenta</Link>
+                <Link to="/perfil" className="border border-gray-400 px-4 py-2">Ir a mi cuenta</Link>
             </section>
         );
     }

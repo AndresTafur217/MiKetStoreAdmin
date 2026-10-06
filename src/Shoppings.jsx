@@ -103,7 +103,7 @@ export function Shoppings() {
       <section className="mx-auto flex max-w-2xl flex-col items-center gap-4 py-16 text-center">
         <h1 className="text-2xl font-bold">Carrito de compras</h1>
         <p className="text-gray-600">Inicia sesión para consultar tu carrito.</p>
-        <Link to="/perfil" className="border border-gray-400 px-4 py-2 hover:bg-store-items2">Ir a mi cuenta</Link>
+        <Link to="/perfil" className="border border-gray-400 px-4 py-2">Ir a mi cuenta</Link>
       </section>
     );
   }
@@ -144,7 +144,7 @@ export function Shoppings() {
           </dl>
 
           <div className="mt-6 flex flex-wrap gap-4">
-            <Link to="/orders" className="bg-store-items px-4 py-2.5 font-semibold hover:bg-store-items2">Ver mis pedidos</Link>
+            <Link to="/orders" className="px-4 py-2.5 font-semibold">Ver mis pedidos</Link>
             <Link to="/products" className="self-center text-sm underline">Seguir comprando</Link>
           </div>
         </div>
@@ -166,7 +166,7 @@ export function Shoppings() {
         <div className="border-y border-gray-300 py-12 text-center">
           <p className="text-lg font-medium">Tu carrito está vacío</p>
           <p className="mt-2 text-sm text-gray-600">Añade productos del catálogo para preparar un pedido.</p>
-          <Link to="/products" className="mt-5 inline-block border border-gray-400 px-4 py-2 hover:bg-store-items2">Explorar productos</Link>
+          <Link to="/products" className="mt-5 inline-block border border-gray-400 px-4 py-2">Explorar productos</Link>
         </div>
       ) : (
         <div className="grid gap-8 lg:grid-cols-[1fr_19rem]">
@@ -201,7 +201,7 @@ export function Shoppings() {
             <div className="mt-4 flex justify-between text-sm"><span>Subtotal</span><span>{formatPrice(total)}</span></div>
             <div className="mt-2 flex justify-between text-sm"><span>Envío</span><span>Gratis</span></div>
             <div className="mt-4 flex justify-between border-t border-gray-300 pt-4 text-lg font-bold"><span>Total</span><span>{formatPrice(total)}</span></div>
-            <button type="button" onClick={placeOrder} className="mt-5 w-full bg-store-items px-4 py-3 font-semibold hover:bg-store-items2">Continuar al pago</button>
+            <button type="button" onClick={placeOrder} className="mt-5 w-full px-4 py-3 font-semibold">Continuar al pago</button>
           </aside>
         </div>
       )}

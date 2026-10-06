@@ -56,7 +56,7 @@ export function Info() {
       </section>
       <section className="acciones-rapidas flex-3 xl:flex-2 capitalize rounded-[20px] flex flex-col gap-2.5 items-center justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 size-full gap-2.5 items-center justify-center font-semibold">
-          <Link to="/sales?register=1" className="cursor-pointer hover:bg-mist-300 hover:text-mist-900 transition-all ease-in-out border border-gray-300 px-2.5 bg-cyan-600 text-white size-full shadow-md rounded-[20px] overflow-hidden flex flex-col justify-between col-span-1 row-span-2">
+          <Link to="/pos" className="cursor-pointer hover:bg-mist-300 hover:text-mist-900 transition-all ease-in-out border border-gray-300 px-2.5 bg-cyan-600 text-white size-full shadow-md rounded-[20px] overflow-hidden flex flex-col justify-between col-span-1 row-span-2">
             <div className="size-full flex justify-center items-center capitalize p-1 text-[14px]">registrar venta</div>
           </Link>
           <Link to="/products" className="cursor-pointer hover:bg-mist-300 transition-all ease-in-out border border-gray-300 px-2.5 size-full shadow-md rounded-[20px] overflow-hidden flex flex-col justify-between">

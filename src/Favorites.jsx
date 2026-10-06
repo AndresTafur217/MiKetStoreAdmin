@@ -245,7 +245,7 @@ export function Favorites() {
       <section className="mx-auto flex max-w-2xl flex-col items-center gap-4 py-16 text-center">
         <h1 className="text-2xl font-bold">Tus favoritos</h1>
         <p className="text-gray-600">Inicia sesión para consultar tus productos guardados.</p>
-        <Link to="/perfil" className="border border-gray-400 px-4 py-2 hover:bg-store-items2">Ir a mi cuenta</Link>
+        <Link to="/perfil" className="border border-gray-400 px-4 py-2">Ir a mi cuenta</Link>
       </section>
     );
   }
@@ -297,7 +297,7 @@ export function Favorites() {
             <div 
               className={`border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
                 transition-all ease-in-out hover:scale-105 hover:border-gray-950 hover:shadow-2xl
-                ${showFilters ? 'bg-store-details border-gray-950' : 'hover:bg-store-details'}`}
+                ${showFilters ? 'border-gray-950' : ''}`}
               onClick={() => setShowFilters(!showFilters)}
             >
               Filtros avanzados {hasActiveFilters(filters) &&
@@ -306,7 +306,7 @@ export function Favorites() {
             </div>
 
             <div className="border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
-              transition-all ease-in-out hover:scale-105 hover:bg-store-items2 hover:border-gray-950 
+              transition-all ease-in-out hover:scale-105 hover:border-gray-950 
               hover:shadow-2xl"
               onClick={() => handleFilterChange('inStock', !filters.inStock)}
             >
@@ -314,7 +314,7 @@ export function Favorites() {
             </div>
 
             <div className="border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
-              transition-all ease-in-out hover:scale-105 hover:bg-store-items2 hover:border-gray-950 
+              transition-all ease-in-out hover:scale-105 hover:border-gray-950 
               hover:shadow-2xl"
               onClick={clearFilters}
             >
@@ -493,9 +493,9 @@ export function Favorites() {
             return (
               <div
                 key={favorite.id}
-                className="h-product w-product rounded-4xl p-2.5 flex flex-col gap-1.5 bg-store-bg2/50 shadow-lg"
+                className="h-product w-product rounded-4xl p-2.5 flex flex-col gap-1.5 shadow-lg"
               >
-                <section className="h-2/3 w-full rounded-t-3xl bg-store-bg2/70 overflow-hidden relative">
+                <section className="h-2/3 w-full rounded-t-3xl overflow-hidden relative">
                   {/* Imagen principal */}
                   {product.imagenes?.length > 0 ? (
                     <SkeletonImage
@@ -553,7 +553,7 @@ export function Favorites() {
                     </div>
                   </div>
                 </section>
-                <section className="h-1/3 w-full p-1 rounded-b-3xl bg-store-bg2/70 flex flex-col gap-1 overflow-hidden">
+                <section className="h-1/3 w-full p-1 rounded-b-3xl flex flex-col gap-1 overflow-hidden">
                   <div className="w-full h-max overflow-x-auto scrollbar">
                     <article className="w-max h-max">{product.nombre}</article>
                   </div>
@@ -561,7 +561,7 @@ export function Favorites() {
                     <div className="w-2/3 h-full overflow-y-auto scrollbar-none">
                       <article className="w-2/3">{product.descripcion}</article>
                     </div>
-                    <article className="w-1/3 h-full rounded-2xl flex items-center justify-center bg-store-details">
+                    <article className="w-1/3 h-full rounded-2xl flex items-center justify-center">
                       <strong>{product.precio}</strong>
                     </article>
                   </div>
@@ -576,13 +576,13 @@ export function Favorites() {
       {(favMessage || favError) && (
         <div className="fixed top-4 right-4 flex flex-col gap-2 w-60 sm:w-72 text-[10px] sm:text-xs z-50">
           <div className={`flex items-center justify-between w-full h-12 sm:h-14 rounded-lg px-[10px] ${
-            favError ? 'bg-red-100 border border-red-300' : 'bg-store-items/90'
+            favError ? 'bg-red-100 border border-red-300' : ''
           }`}>
             <div className="flex gap-2 justify-between items-center">
               <div className={`p-1 rounded-lg ${
                 favError 
                   ? 'text-red-600 bg-red-200' 
-                  : 'text-emerald-600 bg-store-bg2/60 backdrop-blur-xl'
+                  : 'text-emerald-600 backdrop-blur-xl'
               }`}>
                 <svg className="size-6">
                   <use xlinkHref={favError ? "/sprite.svg#error" : "/sprite.svg#check"} />

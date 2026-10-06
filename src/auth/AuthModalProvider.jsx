@@ -84,7 +84,7 @@ export function AuthModalProvider({ children }) {
                 <input id="login-password" type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full border border-gray-300 px-3 py-2.5 font-normal outline-none focus:border-gray-800" />
               </label>
               {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
-              <button type="submit" className="mt-1 w-full bg-store-items px-4 py-3 font-semibold hover:bg-store-items2 border rounded-1xl border-border-gray hover:bg-gray-100 hover:scale-105">Iniciar sesión</button>
+              <button type="submit" className="mt-1 w-full px-4 py-3 font-semibold border rounded-1xl border-border-gray hover:bg-gray-100 hover:scale-105">Iniciar sesión</button>
             </form>
           </section>
         </div>

@@ -268,7 +268,7 @@ export function Products() {
           <div
             className={`border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
               transition-all ease-in-out hover:scale-105 hover:border-gray-950 hover:shadow-2xl
-              ${showFilters ? 'bg-store-details border-gray-950' : 'hover:bg-store-details'}`}
+              ${showFilters ? 'border-gray-950' : ''}`}
             onClick={() => setShowFilters(!showFilters)}
           >
             Filtros {Object.values(filters).some(f =>
@@ -278,7 +278,7 @@ export function Products() {
 
           {/* Filtros rápidos */}
           <div className="border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
-            transition-all ease-in-out hover:scale-105 hover:bg-store-items2 hover:border-gray-950 
+            transition-all ease-in-out hover:scale-105 hover:border-gray-950 
             hover:shadow-2xl"
             onClick={() => handleFilterChange('inStock', !filters.inStock)}
           >
@@ -286,7 +286,7 @@ export function Products() {
           </div>
 
           <div className="border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
-            transition-all ease-in-out hover:scale-105 hover:bg-store-items2 hover:border-gray-950 
+            transition-all ease-in-out hover:scale-105 hover:border-gray-950 
             hover:shadow-2xl"
             onClick={clearFilters}
           >
@@ -397,10 +397,10 @@ export function Products() {
             return (
               <div
                 key={product.id}
-                className="w-60 md:w-product h-100 rounded-4xl p-2.5 flex flex-col gap-1.5 bg-store-bg2/50 shadow-lg cursor-pointer hover:scale-101 transition-all ease-in-out overflow-auto"
+                className="w-60 md:w-product h-100 rounded-4xl p-2.5 flex flex-col gap-1.5 shadow-lg cursor-pointer hover:scale-101 transition-all ease-in-out overflow-auto"
                 onClick={() => openProductModal(product)}
               >
-                <section className="w-full h-3/4 border-b border-b-border-gray rounded-t-3xl bg-store-bg2/70 overflow-hidden relative flex justify-center items-center">
+                <section className="w-full h-3/4 border-b border-b-border-gray rounded-t-3xl overflow-hidden relative flex justify-center items-center">
                   {/* Imagen principal */}
                   {product.imagenes?.[0] ? (
                     <SkeletonImage
@@ -440,7 +440,7 @@ export function Products() {
                     </button>
                   </div>
                 </section>
-                <section className="h-1/3 w-full p-1 rounded-b-3xl bg-store-bg2/70 flex flex-col gap-1 overflow-hidden">
+                <section className="h-1/3 w-full p-1 rounded-b-3xl flex flex-col gap-1 overflow-hidden">
                   <div className="w-full h-max overflow-x-auto scrollbar">
                     <article className="w-max h-max">{product.nombre}</article>
                   </div>
@@ -448,7 +448,7 @@ export function Products() {
                     <div className="w-2/3 h-full overflow-y-auto scrollbar-none">
                       <article className="w-2/3">{product.descripcion}</article>
                     </div>
-                    <article className="w-1/3 h-full rounded-2xl flex items-center justify-center bg-store-details">
+                    <article className="w-1/3 h-full rounded-2xl flex items-center justify-center">
                       <strong>{new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(product.precio)}</strong>
                     </article>
                   </div>

@@ -31,9 +31,9 @@ export function SkeletonImage({ src, alt, className = "", imageClassName = "obje
 
 function ProductCardSkeleton() {
   return (
-    <article aria-hidden="true" className="size-product rounded-4xl bg-store-bg2/50 p-2.5 shadow-lg">
+    <article aria-hidden="true" className="size-product rounded-4xl p-2.5 shadow-lg">
       <Block className="h-2/3 w-full rounded-t-3xl" />
-      <div className="mt-1.5 flex h-1/3 flex-col gap-2 rounded-b-3xl bg-store-bg2/70 p-2">
+      <div className="mt-1.5 flex h-1/3 flex-col gap-2 rounded-b-3xl p-2">
         <Block className="h-4 w-3/4 rounded" />
         <div className="flex flex-1 items-end justify-between gap-2">
           <div className="flex w-2/3 flex-col gap-2">

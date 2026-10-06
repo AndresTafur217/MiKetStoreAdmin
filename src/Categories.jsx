@@ -77,7 +77,7 @@ export function Categories({ compact = false }) {
         </article>
         <span className="flex-1 px-2 font-bold transition-all duration-300">Categorias</span>
         <button type="button" onClick={() => openEditor()}
-          className="bg-store-items px-4 py-2 font-semibold text-white  bg-primary rounded-xl shadow-md transition-all duration-300 
+          className="px-4 py-2 font-semibold text-white  bg-primary rounded-xl shadow-md transition-all duration-300 
             hover:scale-105 hover:bg-primary/60">Agregar categoría</button>
       </section>
       <div className={compact ? "flex gap-3 min-w-max pb-2" : "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3"}>
@@ -87,7 +87,7 @@ export function Categories({ compact = false }) {
           return (
             <article key={category.id} className={`flex flex-col justify-between border border-gray-300 bg-white/70 rounded-2xl transition-all duration-300 
               hover:scale-105 ${compact ? "w-52 min-h-24" : "min-h-32"}`}>
-              <Link to={`/products?category=${category.id}`} className="flex flex-1 flex-col p-4 transition-colors hover:bg-store-items2">
+              <Link to={`/products?category=${category.id}`} className="flex flex-1 flex-col p-4 transition-colors">
                 <span className="font-semibold">{category.nombre}</span>
                 <span className="mt-2 text-sm text-gray-600">{category.descripcion}</span>
                 <span className="mt-3 text-xs text-gray-500">{productCount} {productCount === 1 ? "producto" : "productos"}</span>
@@ -132,7 +132,7 @@ export function Categories({ compact = false }) {
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl 
                 hover:shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
-              <button type="submit" className="bg-store-items px-4 py-2 font-semibold text-white  bg-primary rounded-xl shadow-md 
+              <button type="submit" className="px-4 py-2 font-semibold text-white  bg-primary rounded-xl shadow-md 
                 transition-all duration-300 hover:scale-105 hover:bg-primary/60">Guardar categoría</button>
             </div>
           </form>

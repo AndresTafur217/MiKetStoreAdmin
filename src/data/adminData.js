@@ -31,7 +31,7 @@ const seedUsers = [
     numero_documento: "1000000001",
     fecha_de_nacimiento: "1998-05-12",
     id_rol: "cliente",
-    correo: "andrea.tafur@miketstore.com",
+    correo: "andres.tafur@miketstore.com",
     telefono: "3000000001",
     contraseña_hash: "demo-hash-no-autenticable",
     fecha_de_ingreso: "2026-08-01",
@@ -110,7 +110,7 @@ const seedSales = [
     id_usuario: "",
     id_comprador: "",
     id_vendedor: "USR-002",
-    cliente: "Cliente de mostrador",
+    cliente: "Cliente",
     items: [
       { productId: 19, nombre: "Cello Cervini HC-100 1/4", quantity: 1, precio: 1590000, subtotal: 1590000 },
       { productId: 9, nombre: "Guitarra Electrica Ibanez IC420-ABM/ESTUCHE", quantity: 1, precio: 3000000, subtotal: 3000000 },
@@ -196,7 +196,7 @@ export const recordAdminSale = (order, user, options = {}) => {
     id_usuario: user?.id || "",
     id_comprador: user?.id || "",
     id_vendedor: options.id_vendedor || "USR-002",
-    cliente: user ? `${user.nombre} ${user.apellidos || ""}`.trim() : "Cliente de mostrador",
+    cliente: user ? `${user.nombre} ${user.apellidos || ""}`.trim() : "Cliente",
     items: order.items.map((item) => ({
       productId: item.productId,
       nombre: item.nombre,

@@ -11,6 +11,7 @@ const Categories = lazy(() => import("./Categories").then((module) => ({ default
 const Favorites = lazy(() => import("./Favorites").then((module) => ({ default: module.Favorites })));
 const Shoppings = lazy(() => import("./Shoppings").then((module) => ({ default: module.Shoppings })));
 const Sales = lazy(() => import("./Sales").then((module) => ({ default: module.Sales })));
+const PointOfSale = lazy(() => import("./PointOfSale").then((module) => ({ default: module.PointOfSale })));
 const Inventory = lazy(() => import("./Inventory").then((module) => ({ default: module.Inventory })));
 const Users = lazy(() => import("./Users").then((module) => ({ default: module.Users })));
 const Orders = lazy(() => import("./Orders").then((module) => ({ default: module.Orders })));
@@ -38,6 +39,7 @@ export function App() {
             <Route path="shoppings" element={<ProtectedRoute>{withLoading(Shoppings, "cart")}</ProtectedRoute>} />
             <Route path="sales" element={withLoading(Sales, "orders")} />
             <Route path="ventas" element={withLoading(Sales, "orders")} />
+            <Route path="pos" element={withLoading(PointOfSale, "products")} />
             <Route path="inventory" element={withLoading(Inventory, "products")} />
             <Route path="users" element={withLoading(Users, "orders")} />
             <Route path="usuarios" element={withLoading(Users, "orders")} />
