@@ -407,7 +407,7 @@ export function Products() {
 
             return (
               <div key={product.id}
-                className="w-38 border md:w-60 lg:w-product h-60 md:h-100 rounded-2xl md:rounded-4xl p-1.5 md:p-2.5 flex flex-col gap-1.5 shadow-lg cursor-pointer hover:scale-101 transition-all ease-in-out overflow-auto"
+                className="w-38 md:w-60 lg:w-product h-60 md:h-100 rounded-2xl md:rounded-4xl p-1.5 md:p-2.5 flex flex-col gap-1.5 shadow-lg cursor-pointer hover:scale-101 transition-all ease-in-out overflow-auto"
                 onClick={() => openProductModal(product)}>
                 <section className="w-full h-3/5 md:h-2/3 border-b border-b-border-gray rounded-t-xl md:rounded-t-3xl overflow-hidden relative flex justify-center items-center">
                   {/* Imagen principal */}
