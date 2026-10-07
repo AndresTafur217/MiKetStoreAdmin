@@ -52,9 +52,9 @@ export function Orders() {
     }
 
     return (
-        <section className="mx-auto w-full flex flex-col gap-5">
-            <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-                <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+        <section className="mx-auto w-full flex flex-col gap-2.5 md:gap-5">
+            <section className="w-full h-15 lg:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
+                <article className="rounded-1xl size-10 lg:size-14 flex justify-center items-center shadow-md bg-accent">
                 <svg className="size-7">
                     <use xlinkHref="/sprite.svg#orders" />
                 </svg>

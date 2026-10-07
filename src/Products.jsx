@@ -283,51 +283,44 @@ export function Products() {
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   return (
-    <div className="flex flex-col gap-4 flex-1 overflow-y-auto scrollbar">
-      <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-        <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+    <div className="flex flex-col gap-2.5 md:gap-4 flex-1 overflow-y-auto scrollbar">
+      <section className="w-full h-15 lg:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
+        <article className="rounded-1xl size-10 lg:size-14 flex justify-center items-center shadow-md bg-accent">
           <svg className="size-7">
             <use xlinkHref="/sprite.svg#tags" />
           </svg>
         </article>
         <span className="flex-1 px-2 font-bold transition-all duration-300">Productos</span>
         <button type="button" onClick={() => openProductEditor()}
-          className="bg-store-items px-4 py-2 font-semibold text-white bg-primary rounded-xl shadow-md transition-all duration-300 
+          className="bg-store-items px-2 lg:px-4 py-2 font-semibold text-white bg-primary rounded-xl shadow-md transition-all duration-300 
             hover:scale-105 hover:bg-primary/60">Agregar producto</button>
       </section>
 
       {/* Barra de filtros */}
       {!isHome && (
-        <div className="w-full h-max flex flex-row flex-wrap gap-2.5 justify-start items-center p-2.5">
-          <div
-            className={`border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
+        <div className="w-full h-max flex flex-row flex-wrap gap-2.5 justify-start items-center md:p-2.5">
+          <div className={`border border-gray-400 w-max h-max text-[12px] md:text-[16px] py-1 px-2.5 rounded-xl cursor-pointer 
               transition-all ease-in-out hover:scale-105 hover:border-gray-950 hover:shadow-2xl
-              ${showFilters ? 'border-gray-950' : ''}`}
-            onClick={() => setShowFilters(!showFilters)}
-          >
+              ${showFilters ? 'border-gray-950' : ''}`} onClick={() => setShowFilters(!showFilters)}>
             Filtros {Object.values(filters).some(f =>
               Array.isArray(f) ? f.length > 0 : f !== "" && f !== false
             ) && <span className="ml-1 bg-red-500 text-white rounded-full px-1 text-xs">•</span>}
           </div>
 
           {/* Filtros rápidos */}
-          <div className="border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
+          <div className="border border-gray-400 w-max text-[12px] md:text-[16px] h-max py-1 px-2.5 rounded-xl cursor-pointer 
             transition-all ease-in-out hover:scale-105 hover:border-gray-950 
-            hover:shadow-2xl"
-            onClick={() => handleFilterChange('inStock', !filters.inStock)}
-          >
+            hover:shadow-2xl" onClick={() => handleFilterChange('inStock', !filters.inStock)}>
             Solo en stock {filters.inStock && <span className="ml-1 text-green-600">✓</span>}
           </div>
 
-          <div className="border border-gray-400 w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
+          <div className="border border-gray-400 text-[12px] md:text-[16px] w-max h-max py-1 px-2.5 rounded-xl cursor-pointer 
             transition-all ease-in-out hover:scale-105 hover:border-gray-950 
-            hover:shadow-2xl"
-            onClick={clearFilters}
-          >
+            hover:shadow-2xl" onClick={clearFilters}>
             Limpiar filtros
           </div>
 
-          <div className="ml-auto text-sm text-gray-600">
+          <div className="ml-auto text-[10px] md:text-sm text-gray-600">
             {filteredProducts.length} de {products.length} productos
           </div>
         </div>
@@ -344,12 +337,9 @@ export function Products() {
               <div className="max-h-32 overflow-y-auto space-y-1 scrollbar">
                 {categories.map(category => (
                   <label key={category.id} className="flex items-center space-x-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={filters.selectedCategories.includes(category.id)}
+                    <input type="checkbox" checked={filters.selectedCategories.includes(category.id)}
                       onChange={() => toggleArrayFilter('selectedCategories', category.id)}
-                      className="rounded border-gray-300"
-                    />
+                      className="rounded border-gray-300"/>
                     <span>{category.nombre}</span>
                   </label>
                 ))}
@@ -362,12 +352,9 @@ export function Products() {
               <div className="max-h-32 overflow-y-auto space-y-1 scrollbar">
                 {uniqueSpecs.map(spec => (
                   <label key={spec} className="flex items-center space-x-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={filters.selectedSpecs.includes(spec)}
+                    <input type="checkbox" checked={filters.selectedSpecs.includes(spec)}
                       onChange={() => toggleArrayFilter('selectedSpecs', spec)}
-                      className="rounded border-gray-300"
-                    />
+                      className="rounded border-gray-300"/>
                     <span>{spec}</span>
                   </label>
                 ))}
@@ -378,31 +365,21 @@ export function Products() {
             <div className="space-y-2">
               <h4 className="font-medium text-gray-800">Rango de precio</h4>
               <div className="flex space-x-2">
-                <input
-                  type="number"
-                  placeholder="Mín"
-                  value={filters.minPrice}
+                <input type="number" placeholder="Mín" value={filters.minPrice}
                   onChange={(e) => handleFilterChange('minPrice', e.target.value)}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                />
-                <input
-                  type="number"
-                  placeholder="Máx"
-                  value={filters.maxPrice}
+                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"/>
+                <input type="number" placeholder="Máx" value={filters.maxPrice}
                   onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                />
+                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"/>
               </div>
             </div>
 
             {/* Filtro por estado */}
             <div className="space-y-2">
               <h4 className="font-medium text-gray-800">Estado</h4>
-              <select
-                value={filters.estado}
+              <select value={filters.estado}
                 onChange={(e) => handleFilterChange('estado', e.target.value)}
-                className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-              >
+                className="w-full px-2 py-1 border border-gray-300 rounded text-sm">
                 <option value="">Todos</option>
                 <option value="disponible">Disponible</option>
                 <option value="casi agotado">Casi agotado</option>
@@ -429,19 +406,15 @@ export function Products() {
             }
 
             return (
-              <div
-                key={product.id}
-                className="w-60 md:w-product h-100 rounded-4xl p-2.5 flex flex-col gap-1.5 shadow-lg cursor-pointer hover:scale-101 transition-all ease-in-out overflow-auto"
-                onClick={() => openProductModal(product)}
-              >
-                <section className="w-full h-3/4 border-b border-b-border-gray rounded-t-3xl overflow-hidden relative flex justify-center items-center">
+              <div key={product.id}
+                className="w-38 border md:w-60 lg:w-product h-60 md:h-100 rounded-2xl md:rounded-4xl p-1.5 md:p-2.5 flex flex-col gap-1.5 shadow-lg cursor-pointer hover:scale-101 transition-all ease-in-out overflow-auto"
+                onClick={() => openProductModal(product)}>
+                <section className="w-full h-3/5 md:h-2/3 border-b border-b-border-gray rounded-t-xl md:rounded-t-3xl overflow-hidden relative flex justify-center items-center">
                   {/* Imagen principal */}
                   {product.imagenes?.[0] ? (
-                    <SkeletonImage
-                      src={product.imagenes[0].url}
+                    <SkeletonImage src={product.imagenes[0].url}
                       alt={product.imagenes[0].alt || product.nombre}
-                      className="absolute inset-0"
-                    />
+                      className="absolute inset-0"/>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
                       Sin imagen
@@ -454,35 +427,36 @@ export function Products() {
                     </div>
                   )}
 
-                  <div className="absolute right-0 bottom-0 p-1 m-3 rounded-full cursor-pointer transition-all duration-300
+                  <div className="absolute right-0 bottom-0 p-1 m-1.5 md:m-3 rounded-full cursor-pointer transition-all duration-300
                       hover:bg-black/50 hover:text-white hover:scale-105">
                     <button type="button" onClick={(event) => { event.stopPropagation(); openProductEditor(product); }} aria-label={`Editar ${product.nombre}`}
                       className="h-full w-full flex justify-center items-center">
-                      <svg width="25" height="25">
+                      <svg className="size-4 md:size-6">
                         <use xlinkHref="/sprite.svg#edit" />
                       </svg>
                     </button>
                   </div>
 
-                  <div className="absolute right-0 bottom-11 p-1 m-3 rounded-full cursor-pointer text-red-700 transition-all 
+                  <div className="absolute right-0 bottom-7 md:bottom-11 p-1 m-1.5 md:m-3 rounded-full cursor-pointer text-red-700 transition-all 
                     duration-300 hover:bg-red-700/50 hover:text-white hover:scale-105">
                     <button type="button" onClick={(event) => { event.stopPropagation(); deleteProduct(product); }} aria-label={`Eliminar ${product.nombre}`}
                       className="h-full w-full flex justify-center items-center">
-                      <svg width="25" height="25">
+                      <svg className="size-4 md:size-6">
                         <use xlinkHref="/sprite.svg#delete" />
                       </svg>
                     </button>
                   </div>
                 </section>
-                <section className="h-1/3 w-full p-1 rounded-b-3xl flex flex-col gap-1 overflow-hidden">
-                  <div className="w-full h-max overflow-x-auto scrollbar">
+                <section className="h-2/5 md:1/3 w-full p-1 rounded-b-xl md:rounded-b-3xl flex flex-col gap-1 overflow-hidden">
+                  <div className="w-full h-max overflow-x-auto scrollbar text-[10px] md:text[16px]">
                     <article className="w-max h-max">{product.nombre}</article>
                   </div>
                   <div className="w-full h-2/3 flex flex-row gap-0.5 justify-between">
-                    <div className="w-2/3 h-full overflow-y-auto scrollbar-none">
+                    <div className="w-2/4 md:w-2/3 h-full overflow-y-auto scrollbar-none text-[10px] md:text[16px]">
                       <article className="w-2/3">{product.descripcion}</article>
                     </div>
-                    <article className="w-1/3 h-full rounded-2xl flex items-center justify-center">
+                    <article className="w-2/4 md:1/3 h-full rounded-2xl flex items-center justify-center
+                      text-[12px] md:text-[16px]">
                       <strong>{new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(product.precio)}</strong>
                     </article>
                   </div>
@@ -496,33 +470,27 @@ export function Products() {
       {/* Paginación */}
       {isHome ? (
         <div className="flex justify-center mt-4">
-          <button
-            onClick={() => navigate("/products")}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg transition-all ease-in-out hover:scale-105 cursor-pointer"
-          >
+          <button onClick={() => navigate("/products")}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg transition-all ease-in-out hover:scale-105 cursor-pointer">
             Ver más productos
           </button>
         </div>
       ) : (
         <div className="flex justify-center items-center gap-4 mt-4">
-          <button
+          <button onClick={() => setCurrentPage((prev) => prev - 1)}
             className="p-2 rounded-full transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-black/20"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-          >
-            <svg width="20" height="20">
+            disabled={currentPage === 1}>
+            <svg className="size-3.5 md:size-5.5">
               <use xlinkHref="/sprite.svg#arrowl" />
             </svg>
           </button>
-          <span className="">
+          <span className="text-[12px] md:text-[16px]">
             Página {currentPage} de {totalPages}
           </span>
-          <button
+          <button onClick={() => setCurrentPage((prev) => prev + 1)}
             className="p-2 rounded-full transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-black/20"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-          >
-            <svg width="20" height="20">
+            disabled={currentPage === totalPages}>
+            <svg className="size-3.5 md:size-5.5">
               <use xlinkHref="/sprite.svg#arrowr" />
             </svg>
           </button>
@@ -539,19 +507,12 @@ export function Products() {
                   className="mt-1 w-full border border-gray-300 p-2" />
               </label>
               <label className="text-sm font-medium">Código de barras / referencia
-                <input
-                  required
-                  inputMode="numeric"
-                  pattern="[0-9]+"
-                  title="Solo números"
-                  value={productForm.codigo_barras}
+                <input required inputMode="numeric" pattern="[0-9]+" title="Solo números" value={productForm.codigo_barras}
                   onChange={(event) => setProductForm({
                     ...productForm,
                     codigo_barras: event.target.value.replace(/\D/g, ""),
                   })}
-                  placeholder="0000000000001"
-                  className="mt-1 w-full border border-gray-300 p-2"
-                />
+                  placeholder="0000000000001" className="mt-1 w-full border border-gray-300 p-2"/>
               </label>
               <label className="text-sm font-medium">Proveedor
                 <input required value={productForm.proveedor} onChange={(event) => setProductForm({ ...productForm, proveedor: event.target.value })} 
@@ -606,10 +567,10 @@ export function Products() {
             </label>
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setProductEditorOpen(false)} 
-                className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+                className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
               <button type="submit" className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 
-                hover:bg-primary/60 px-4 py-2 font-semibold text-white">Guardar producto</button>
+                hover:bg-primary/60 px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Guardar producto</button>
             </div>
           </form>
         </div>,
@@ -621,14 +582,9 @@ export function Products() {
           className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 p-3 sm:p-6"
           onClick={(event) => {
             if (event.target === event.currentTarget) closeProductModal();
-          }}
-        >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="product-modal-title"
-            className="flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl md:flex-row"
-          >
+          }}>
+          <div role="dialog" aria-modal="true" aria-labelledby="product-modal-title"
+            className="flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl md:flex-row">
             <section className="flex h-[38vh] min-h-56 max-h-80 shrink-0 flex-col bg-gray-50 md:h-auto md:min-h-0 md:w-[42%] md:max-w-[28rem]">
               {selectedProduct.imagenes?.length > 0 ? (
                 <>
@@ -663,7 +619,7 @@ export function Products() {
             </section>
 
             <section className="flex min-h-0 flex-1 flex-col">
-              <header className="flex items-start justify-between gap-4 border-b border-gray-100 px-5 py-4 sm:px-6">
+              <header className="flex items-start justify-between gap-2 md:gap-4 border-b border-gray-100 px-2.5 md:px-5 py-2 md:py-4 sm:px-6">
                 <div className="min-w-0">
                   <div className="mb-2 flex flex-wrap gap-1.5">
                     {selectedProduct.categorias?.map((category) => (
@@ -672,16 +628,13 @@ export function Products() {
                       </span>
                     ))}
                   </div>
-                  <h2 id="product-modal-title" className="text-lg font-bold leading-snug text-gray-950 sm:text-xl">
+                  <h2 id="product-modal-title" className="text-[14px] md:text-lg font-bold leading-snug text-gray-950">
                     {selectedProduct.nombre}
                   </h2>
                 </div>
-                <button
-                  type="button"
-                  onClick={closeProductModal}
+                <button type="button" onClick={closeProductModal}
                   aria-label="Cerrar detalle del producto"
-                  className="grid size-9 shrink-0 place-items-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-950"
-                >
+                  className="grid size-9 shrink-0 place-items-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-950">
                   <svg className="size-4"><use xlinkHref="/sprite.svg#xmark" /></svg>
                 </button>
               </header>
@@ -689,25 +642,25 @@ export function Products() {
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-4 sm:px-6">
                 <div className="flex flex-wrap items-end justify-between gap-3">
                   <div>
-                    <p className="text-xs font-medium uppercase text-gray-500">Precio</p>
-                    <p className="mt-1 text-2xl font-bold text-blue-700">
+                    <p className="text-[10px] md:text-xs font-medium uppercase text-gray-500">Precio</p>
+                    <p className="mt-1 md:text-2xl font-bold text-blue-700">
                       {new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(selectedProduct.precio)}
                     </p>
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${selectedProduct.stock > 0 ? "bg-primary/20 text-secondary" : "bg-red-50 text-red-700"
+                  <span className={`rounded-full px-3 py-1 text-[10px] md:text-xs font-semibold ${selectedProduct.stock > 0 ? "bg-primary/20 text-secondary" : "bg-red-50 text-red-700"
                     }`}>
                     {selectedProduct.stock > 0 ? `${selectedProduct.stock} unidades disponibles` : "Agotado"}
                   </span>
                 </div>
 
-                <p className="text-sm leading-6 text-gray-600">{selectedProduct.descripcion}</p>
+                <p className="text-[10px] md:text-sm leading-3 md:leading-6 text-gray-600">{selectedProduct.descripcion}</p>
 
                 {selectedProduct.especificaciones?.length > 0 && (
                   <div>
                     <h3 className="mb-2 text-sm font-semibold text-gray-900">Características</h3>
                     <ul className="grid gap-2 sm:grid-cols-2">
                       {selectedProduct.especificaciones.map((specification, index) => (
-                        <li key={`${specification.nombre}-${index}`} className="rounded-lg bg-gray-50 px-3 py-2 text-sm leading-5 text-gray-600">
+                        <li key={`${specification.nombre}-${index}`} className="rounded-lg bg-gray-50 px-3 py-2 text-[10px] md:text-sm leading-3 md:leading-5 text-gray-600">
                           {specification.nombre}
                         </li>
                       ))}
@@ -717,12 +670,12 @@ export function Products() {
 
                 <div className="grid grid-cols-2 gap-3 border-t border-gray-100 pt-4 text-sm">
                   <div>
-                    <p className="text-xs font-medium uppercase text-gray-500">Código de barras</p>
-                    <p className="mt-1 font-medium text-gray-800">{selectedProduct.codigo_barras || "Sin etiqueta"}</p>
+                    <p className="text-[10px] md:text-xs font-medium uppercase text-gray-500">Código de barras</p>
+                    <p className="text-[12px] md:text-[16px] mt-1 font-medium text-gray-800">{selectedProduct.codigo_barras || "Sin etiqueta"}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium uppercase text-gray-500">Calificación</p>
-                    <p className="mt-1 font-medium text-gray-800">
+                    <p className="text-[10px] md:text-xs font-medium uppercase text-gray-500">Calificación</p>
+                    <p className="text-[12px] md:text-[16px] mt-1 font-medium text-gray-800">
                       {selectedProduct.totalValoraciones > 0
                         ? `${selectedProduct.valoracionPromedio} de 5 · ${selectedProduct.totalValoraciones} opiniones`
                         : "Sin calificaciones"}
@@ -731,10 +684,11 @@ export function Products() {
                 </div>
               </div>
 
-              <footer className="grid shrink-0 grid-cols-1 gap-2 border-t border-gray-100 bg-white p-4 min-[420px]:grid-cols-2 sm:px-6">
+              <footer className="grid shrink-0 grid-cols-1 gap-2 border-t border-gray-100 bg-white p-2 md:p-4 min-[420px]:grid-cols-2 sm:px-6">
                 <button
                   type="button" onClick={(event) => { event.stopPropagation(); openProductEditor(selectedProduct); }} aria-label={`Editar ${selectedProduct.nombre}`}
-                  className={`flex min-h-12 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold hover:scale-105 transition-colors`}>
+                  className={`flex min-h-12 items-center justify-center gap-2 rounded-xl border px-2 py-1 md:px-4 md:py-3 text-[14px] md:text-sm 
+                  font-semibold hover:scale-105 transition-colors`}>
                   <svg className="size-5 shrink-0">
                     <use xlinkHref="/sprite.svg#edit" />
                   </svg>
@@ -742,7 +696,7 @@ export function Products() {
                 </button>
                 <button
                   type="button" onClick={(event) => { event.stopPropagation(); deleteProduct(selectedProduct); }} aria-label={`Eliminar ${selectedProduct.nombre}`}
-                  className="flex min-h-12 items-center justify-center gap-2 rounded-xl hover:scale-105 bg-primary-dark px-4 py-3 text-sm 
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-xl hover:scale-105 bg-primary-dark px-2 py-1.5 md:px-4 md:py-3 text-[14px] md:text-sm 
                   font-semibold text-white transition-colors hover:bg-primary/50 disabled:cursor-not-allowed disabled:opacity-50" >
                   <svg className="size-5 shrink-0">
                     <use xlinkHref="/sprite.svg#delete" />

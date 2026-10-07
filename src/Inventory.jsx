@@ -252,82 +252,82 @@ export function Inventory() {
     });
 
   return (
-    <section className="mx-auto w-full flex flex-col gap-5">
-      <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-        <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+    <section className="mx-auto w-full flex flex-col gap-2.5 md:gap-5">
+      <section className="w-full h-15 lg:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
+        <article className="rounded-1xl size-10 lg:size-14 flex justify-center items-center shadow-md bg-accent">
           <svg className="size-7">
             <use xlinkHref="/sprite.svg#categories" />
           </svg>
         </article>
         <span className="flex-1 px-2 font-bold transition-all duration-300">Inventario</span>
         {activeTab === "Conteos" &&
-          <button type="button" onClick={openCountEditor} className="rounded-xl bg-primary px-4 py-2 font-semibold text-white 
+          <button type="button" onClick={openCountEditor} className="rounded-xl bg-primary px-2 py-1 md:px-4 md:py-2  font-semibold text-white 
             transition-all duration-300 hover:bg-primary/60 hover:scale-105">Registrar conteo
           </button>
         }
         {activeTab === "Proveedores" &&
-          <button type="button" onClick={() => openSupplierEditor()} className="rounded-xl bg-primary px-4 py-2 font-semibold text-white 
+          <button type="button" onClick={() => openSupplierEditor()} className="rounded-xl bg-primary px-2 py-1 md:px-4 md:py-2  font-semibold text-white 
             transition-all duration-300 hover:bg-primary/60 hover:scale-105">Agregar proveedor
           </button>
         }
         {activeTab === "Compras" &&
           <button type="button" onClick={openOrderEditor} disabled={data.suppliers.length === 0}
-            className="rounded-xl bg-primary px-4 py-2 font-semibold text-white 
-              transition-all duration-300 hover:bg-primary/60 hover:scale-105">Crear pedido de tienda
+            className="rounded-xl bg-primary px-2 py-1 md:px-4 md:py-2  font-semibold text-white 
+              transition-all duration-300 hover:bg-primary/60 hover:scale-105">Pedido de tienda
           </button>
         }
       </section>
 
-      <nav className="mb-5 flex flex-wrap gap-5 border-b border-gray-300" aria-label="Inventario y abastecimiento">
+      <nav className="mb-2 md:mb-5 flex flex-wrap gap-2 md:gap-5 border-b border-gray-300" aria-label="Inventario y abastecimiento">
         {tabs.map((tab) =>
           <button key={tab} type="button" onClick={() => setActiveTab(tab)}
-            className={`border-b-2 px-1 pb-3 text-sm font-semibold ${activeTab === tab ? "border-emerald-700 text-emerald-900" :
+            className={`border-b-2 px-1 pb-1.5 md:pb-3 text-sm font-semibold ${activeTab === tab ? "border-emerald-700 text-emerald-900" :
               "border-transparent text-gray-600 hover:text-gray-950"}`}>{tab}
           </button>
         )}
       </nav>
 
       {activeTab === "Inventario" && <>
-        <div className="mb-5 grid grid-cols-2 gap-4 border-y border-gray-300 py-4 sm:grid-cols-3 xl:grid-cols-6">
-          <div><p className="text-sm text-gray-500">Productos</p><strong className="text-xl">{products.length}</strong></div>
-          <div><p className="text-sm text-gray-500">Stock actual</p><strong className="text-xl">{totalStockUnits}</strong></div>
-          <div><p className="text-sm text-gray-500">Comprado</p><strong className="text-xl">{totalPurchasedUnits}</strong></div>
-          <div><p className="text-sm text-gray-500">Vendido</p><strong className="text-xl">{totalSoldUnits}</strong></div>
-          <div><p className="text-sm text-gray-500">Stock esperado</p><strong className="text-xl">{totalExpectedUnits}</strong></div>
-          <div><p className="text-sm text-gray-500">Referencias con poco stock</p><strong className="text-xl">{lowStockProducts.length}</strong></div>
+        <div className="mb-2 md:mb-5 grid grid-cols-3 gap-2 md:gap-4 border-y border-gray-300 py-2 md:py-4 xl:grid-cols-6">
+          <div><p className="text-[10px] md:text-sm text-gray-500">Productos</p><strong className="md:text-xl">{products.length}</strong></div>
+          <div><p className="text-[10px] md:text-sm text-gray-500">Stock actual</p><strong className="md:text-xl">{totalStockUnits}</strong></div>
+          <div><p className="text-[10px] md:text-sm text-gray-500">Comprado</p><strong className="md:text-xl">{totalPurchasedUnits}</strong></div>
+          <div><p className="text-[10px] md:text-sm text-gray-500">Vendido</p><strong className="md:text-xl">{totalSoldUnits}</strong></div>
+          <div><p className="text-[10px] md:text-sm text-gray-500">Stock esperado</p><strong className="md:text-xl">{totalExpectedUnits}</strong></div>
+          <div><p className="text-[10px] md:text-sm text-gray-500">Referencias con poco stock</p><strong className="md:text-xl">{lowStockProducts.length}</strong></div>
         </div>
         <div className="overflow-x-auto border-y border-gray-300 scrollbar">
-          <table className="w-full min-w-[1250px] text-left text-sm">
-            <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+          <table className="w-full min-w-[1250px] text-left text-[12px] md:text-sm">
+            <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
               <tr>
-                <th className="px-3 py-3">Código</th>
-                <th className="px-3 py-3">Producto</th>
-                <th className="px-3 py-3">Categoría</th>
-                <th className="px-3 py-3">Proveedor</th>
-                <th className="px-3 py-3">Stock inicial</th>
-                <th className="px-3 py-3">Comprado</th>
-                <th className="px-3 py-3">Vendido</th>
-                <th className="px-3 py-3">Ajustes</th>
-                <th className="px-3 py-3">Stock esperado</th>
-                <th className="px-3 py-3">Stock actual</th>
-                <th className="px-3 py-3">Diferencia</th>
+                <th className="p-1.5 md:px-3 md:py-3">Código</th>
+                <th className="p-1.5 md:px-3 md:py-3">Producto</th>
+                <th className="p-1.5 md:px-3 md:py-3">Categoría</th>
+                <th className="p-1.5 md:px-3 md:py-3">Proveedor</th>
+                <th className="p-1.5 md:px-3 md:py-3">Stock inicial</th>
+                <th className="p-1.5 md:px-3 md:py-3">Comprado</th>
+                <th className="p-1.5 md:px-3 md:py-3">Vendido</th>
+                <th className="p-1.5 md:px-3 md:py-3">Ajustes</th>
+                <th className="p-1.5 md:px-3 md:py-3">Stock esperado</th>
+                <th className="p-1.5 md:px-3 md:py-3">Stock actual</th>
+                <th className="p-1.5 md:px-3 md:py-3">Diferencia</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {inventoryBalances.map(({ product, opening, purchased, sold, adjustments, expected, difference }) => {
                 const supplier = data.suppliers.find((item) => item.id === product.id_proveedor);
                 return <tr key={product.id}>
-                  <td className="px-3 py-3 font-mono text-xs">{product.codigo_barras || "—"}</td>
-                  <td className="px-3 py-3 font-medium">{product.nombre}</td>
-                  <td className="px-3 py-3">{product.categorias?.map((category) => category.nombre).join(", ") || "Sin categoría"}</td>
-                  <td className="px-3 py-3">{supplier?.nombre || product.proveedor || "Por registrar"}</td>
-                  <td className="px-3 py-3">{opening}</td>
-                  <td className="px-3 py-3">{purchased}</td>
-                  <td className="px-3 py-3">{sold}</td>
-                  <td className="px-3 py-3">{adjustments > 0 ? `+${adjustments}` : adjustments}</td>
-                  <td className="px-3 py-3 font-semibold">{expected}</td>
-                  <td className="px-3 py-3">{product.stock}</td>
-                  <td className={`px-3 py-3 font-semibold ${difference === 0 ? "text-emerald-700" : "text-red-700"}`}>
+                  <td className="p-1.5 md:px-3 md:py-3 font-mono text-xs">{product.codigo_barras || "—"}</td>
+                  <td className="p-1.5 md:px-3 md:py-3 font-medium">{product.nombre}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{product.categorias?.map((category) => category.nombre).join(", ") || "Sin categoría"}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{supplier?.nombre || product.proveedor || "Por registrar"}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{opening}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{purchased}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{sold}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{adjustments > 0 ? `+${adjustments}` : adjustments}</td>
+                  <td className="p-1.5 md:px-3 md:py-3 font-semibold">{expected}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{product.stock}</td>
+                  <td className={`p-1.5 md:px-3 md:py-3 font-semibold ${difference === 0 ? "text-emerald-700" : "text-red-700"}`}>
                     {difference > 0 ? `+${difference}` : difference}</td>
                 </tr>;
               })}
@@ -337,16 +337,16 @@ export function Inventory() {
       </>}
 
       {activeTab === "Conteos" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
-        <table className="w-full min-w-[760px] text-left text-sm">
-          <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+        <table className="w-full min-w-[760px] text-left text-[12px] md:text-sm">
+          <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
             <tr>
-              <th className="px-3 py-3">Inventario</th>
-              <th className="px-3 py-3">Fecha</th>
-              <th className="px-3 py-3">Usuario</th>
-              <th className="px-3 py-3">Unidades contadas</th>
-              <th className="px-3 py-3">Diferencias</th>
-              <th className="px-3 py-3">Estado</th>
-              <th className="px-3 py-3">Detalle</th>
+              <th className="p-1.5 md:px-3 md:py-3">Inventario</th>
+              <th className="p-1.5 md:px-3 md:py-3">Fecha</th>
+              <th className="p-1.5 md:px-3 md:py-3">Usuario</th>
+              <th className="p-1.5 md:px-3 md:py-3">Unidades contadas</th>
+              <th className="p-1.5 md:px-3 md:py-3">Diferencias</th>
+              <th className="p-1.5 md:px-3 md:py-3">Estado</th>
+              <th className="p-1.5 md:px-3 md:py-3">Detalle</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -354,13 +354,13 @@ export function Inventory() {
               const details = data.inventoryDetails.filter((detail) => detail.id_inventario === session.id);
               const differenceCount = details.filter((detail) => detail.diferencia !== 0).length;
               return <tr key={session.id}>
-                <td className="px-3 py-3 font-semibold">{session.numero_de_inventario}</td>
-                <td className="px-3 py-3">{formatDate(session.fecha)}</td>
-                <td className="px-3 py-3">{session.id_usuario}</td>
-                <td className="px-3 py-3">{session.stock_total}</td>
-                <td className="px-3 py-3">{differenceCount}</td>
-                <td className="px-3 py-3">{session.estado}</td>
-                <td className="px-3 py-3">
+                <td className="p-1.5 md:px-3 md:py-3 font-semibold">{session.numero_de_inventario}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{formatDate(session.fecha)}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{session.id_usuario}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{session.stock_total}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{differenceCount}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{session.estado}</td>
+                <td className="p-1.5 md:px-3 md:py-3">
                   <button type="button" onClick={() => setSelectedInventoryId(selectedInventoryId === session.id ? "" : session.id)}
                     className="text-blue-800 underline size-7 rounded-full shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
                     font-semibold">{selectedInventoryId === session.id ?
@@ -384,24 +384,24 @@ export function Inventory() {
         {selectedInventoryId && <div className="border-t border-gray-200 p-4">
           <h2 className="mb-3 font-semibold">Detalle del inventario {selectedInventoryId}</h2>
           <div className="overflow-x-auto scrollbar">
-            <table className="w-full min-w-[700px] text-left text-sm">
-              <thead className="text-xs uppercase text-gray-500">
+            <table className="w-full min-w-[700px] text-left text-[12px] md:text-sm">
+              <thead className="text-[12px] md:text-xs uppercase text-gray-500">
                 <tr>
-                  <th className="py-2">Producto</th>
-                  <th className="py-2">Lote</th>
-                  <th className="py-2">Stock del sistema</th>
-                  <th className="py-2">Conteo</th>
-                  <th className="py-2">Diferencia</th>
+                  <th className="py-1 md:py-2">Producto</th>
+                  <th className="py-1 md:py-2">Lote</th>
+                  <th className="py-1 md:py-2">Stock del sistema</th>
+                  <th className="py-1 md:py-2">Conteo</th>
+                  <th className="py-1 md:py-2">Diferencia</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {data.inventoryDetails.filter((detail) => detail.id_inventario === selectedInventoryId).map((detail) =>
                   <tr key={detail.id}>
-                    <td className="py-2">{products.find((product) => product.id === detail.id_producto)?.nombre || "Producto eliminado"}</td>
-                    <td className="py-2">{data.lots.find((lot) => lot.id === detail.id_lote)?.numero_de_lote || "Sin lote asignado"}</td>
-                    <td className="py-2">{detail.stock_sistema}</td>
-                    <td className="py-2">{detail.stock_fisico}</td>
-                    <td className={`py-2 ${detail.diferencia === 0 ? "text-emerald-700" : "text-amber-800"}`}>
+                    <td className="py-1 md:py-2">{products.find((product) => product.id === detail.id_producto)?.nombre || "Producto eliminado"}</td>
+                    <td className="py-1 md:py-2">{data.lots.find((lot) => lot.id === detail.id_lote)?.numero_de_lote || "Sin lote asignado"}</td>
+                    <td className="py-1 md:py-2">{detail.stock_sistema}</td>
+                    <td className="py-1 md:py-2">{detail.stock_fisico}</td>
+                    <td className={`py-1 md:py-2 ${detail.diferencia === 0 ? "text-emerald-700" : "text-amber-800"}`}>
                       {detail.diferencia > 0 ? `+${detail.diferencia}` : detail.diferencia}
                     </td>
                   </tr>)
@@ -413,30 +413,30 @@ export function Inventory() {
       </div>}
 
       {activeTab === "Movimientos" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
-        <table className="w-full min-w-[800px] text-left text-sm">
-          <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+        <table className="w-full min-w-[800px] text-left text-[12px] md:text-sm">
+          <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
             <tr>
-              <th className="px-3 py-3">Movimiento</th>
-              <th className="px-3 py-3">Fecha</th>
-              <th className="px-3 py-3">Producto</th>
-              <th className="px-3 py-3">Tipo</th>
-              <th className="px-3 py-3">Referencia</th>
-              <th className="px-3 py-3">Unidades</th>
-              <th className="px-3 py-3">Usuario</th>
+              <th className="p-1.5 md:px-3 md:py-3">Movimiento</th>
+              <th className="p-1.5 md:px-3 md:py-3">Fecha</th>
+              <th className="p-1.5 md:px-3 md:py-3">Producto</th>
+              <th className="p-1.5 md:px-3 md:py-3">Tipo</th>
+              <th className="p-1.5 md:px-3 md:py-3">Referencia</th>
+              <th className="p-1.5 md:px-3 md:py-3">Unidades</th>
+              <th className="p-1.5 md:px-3 md:py-3">Usuario</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">{data.inventoryMovements.map((movement) => {
             const isOutgoing = movement.tipo === "Salida por venta" || movement.tipo === "Ajuste negativo";
             return <tr key={movement.id}>
-              <td className="px-3 py-3 font-semibold">{movement.id}</td>
-              <td className="px-3 py-3">{formatDate(movement.fecha)}</td>
-              <td className="px-3 py-3">{products.find((product) => product.id === movement.id_producto)?.nombre || "Producto eliminado"}</td>
-              <td className="px-3 py-3">{movement.tipo}</td>
-              <td className="px-3 py-3">{movement.id_referencia}</td>
-              <td className={`px-3 py-3 font-semibold ${isOutgoing ? "text-red-700" : "text-emerald-700"}`}>
+              <td className="p-1.5 md:px-3 md:py-3 font-semibold">{movement.id}</td>
+              <td className="p-1.5 md:px-3 md:py-3">{formatDate(movement.fecha)}</td>
+              <td className="p-1.5 md:px-3 md:py-3">{products.find((product) => product.id === movement.id_producto)?.nombre || "Producto eliminado"}</td>
+              <td className="p-1.5 md:px-3 md:py-3">{movement.tipo}</td>
+              <td className="p-1.5 md:px-3 md:py-3">{movement.id_referencia}</td>
+              <td className={`p-1.5 md:px-3 md:py-3 font-semibold ${isOutgoing ? "text-red-700" : "text-emerald-700"}`}>
                 {isOutgoing ? "−" : "+"}{movement.unidades}
               </td>
-              <td className="px-3 py-3">{movement.id_usuario || "Sin asignar"}</td>
+              <td className="p-1.5 md:px-3 md:py-3">{movement.id_usuario || "Sin asignar"}</td>
             </tr>;
           })}
             {data.inventoryMovements.length === 0 &&
@@ -449,14 +449,14 @@ export function Inventory() {
       </div>}
 
       {activeTab === "Proveedores" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
-        <table className="w-full min-w-[760px] text-left text-sm">
-          <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+        <table className="w-full min-w-[760px] text-left text-[12px] md:text-sm">
+          <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
             <tr>
-              <th className="px-3 py-3">Proveedor</th>
-              <th className="px-3 py-3">Contacto</th>
-              <th className="px-3 py-3">Categorías</th>
-              <th className="px-3 py-3">Estado</th>
-              <th className="px-3 py-3">Acciones</th>
+              <th className="p-1.5 md:px-3 md:py-3">Proveedor</th>
+              <th className="p-1.5 md:px-3 md:py-3">Contacto</th>
+              <th className="p-1.5 md:px-3 md:py-3">Categorías</th>
+              <th className="p-1.5 md:px-3 md:py-3">Estado</th>
+              <th className="p-1.5 md:px-3 md:py-3">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -464,19 +464,19 @@ export function Inventory() {
               const supplierCategoryIds = data.supplierCategories.filter((relation) => relation.id_proveedor === supplier.id).map((relation) => relation.id_categoria);
               const categoryNames = categories.filter((category) => supplierCategoryIds.includes(category.id)).map((category) => category.nombre);
               return <tr key={supplier.id}>
-                <td className="px-3 py-3">
+                <td className="p-1.5 md:px-3 md:py-3">
                   <strong className="block">{supplier.nombre} {supplier.apellidos}</strong>
                   <span className="text-xs text-gray-500">{supplier.id}</span>
                 </td>
-                <td className="px-3 py-3">
+                <td className="p-1.5 md:px-3 md:py-3">
                   {supplier.correo}
                   <span className="block text-gray-500">
                     {supplier.telefono}
                   </span>
                 </td>
-                <td className="px-3 py-3">{categoryNames.join(", ") || "Sin categorías"}</td>
-                <td className="px-3 py-3">{supplier.estado}</td>
-                <td className="px-3 py-3">
+                <td className="p-1.5 md:px-3 md:py-3">{categoryNames.join(", ") || "Sin categorías"}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{supplier.estado}</td>
+                <td className="p-1.5 md:px-3 md:py-3">
                   <div className="flex gap-3">
                     <button type="button" onClick={() => openSupplierEditor(supplier)} className="underline transition-all duration-300 
                       hover:scale-105 rounded-full hover:bg-black/50">
@@ -504,16 +504,16 @@ export function Inventory() {
       </div>}
 
       {activeTab === "Compras" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
-        <table className="w-full min-w-[780px] text-left text-sm">
-          <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+        <table className="w-full min-w-[780px] text-left text-[12px] md:text-sm">
+          <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
             <tr>
-              <th className="px-3 py-3">Pedido</th>
-              <th className="px-3 py-3">Fecha</th>
-              <th className="px-3 py-3">Referencias</th>
-              <th className="px-3 py-3">Total</th>
-              <th className="px-3 py-3">Pago</th>
-              <th className="px-3 py-3">Estado</th>
-              <th className="px-3 py-3">Acciones</th>
+              <th className="p-1.5 md:px-3 md:py-3">Pedido</th>
+              <th className="p-1.5 md:px-3 md:py-3">Fecha</th>
+              <th className="p-1.5 md:px-3 md:py-3">Referencias</th>
+              <th className="p-1.5 md:px-3 md:py-3">Total</th>
+              <th className="p-1.5 md:px-3 md:py-3">Pago</th>
+              <th className="p-1.5 md:px-3 md:py-3">Estado</th>
+              <th className="p-1.5 md:px-3 md:py-3">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -521,16 +521,16 @@ export function Inventory() {
               const details = getOrderDetails(order.id);
               const payment = data.purchasePayments.find((item) => item.id_pedido_tienda === order.id);
               return <tr key={order.id}>
-                <td className="px-3 py-3 font-semibold">{order.id}</td>
-                <td className="px-3 py-3">{formatDate(order.fecha)}</td>
-                <td className="px-3 py-3">{details.length}</td>
-                <td className="px-3 py-3">{formatPrice(order.total)}</td>
-                <td className="px-3 py-3">
+                <td className="p-1.5 md:px-3 md:py-3 font-semibold">{order.id}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{formatDate(order.fecha)}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{details.length}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{formatPrice(order.total)}</td>
+                <td className="p-1.5 md:px-3 md:py-3">
                   {payment?.estado || "Sin registrar"}
                   <span className="block text-gray-500">{payment?.metodo_de_pago}</span>
                 </td>
-                <td className="px-3 py-3">{order.estado}</td>
-                <td className="px-3 py-3">
+                <td className="p-1.5 md:px-3 md:py-3">{order.estado}</td>
+                <td className="p-1.5 md:px-3 md:py-3">
                   <div className="flex items-center gap-3">
                     <button type="button" onClick={() => setSelectedOrderId(selectedOrderId === order.id ? "" : order.id)}
                       className="text-blue-800 underline size-8 rounded-full shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
@@ -561,24 +561,24 @@ export function Inventory() {
         {selectedOrderId && <div className="border-t border-gray-200 p-4">
           <h2 className="mb-3 font-semibold">Detalle del pedido {selectedOrderId}</h2>
           <div className="overflow-x-auto scrollbar">
-            <table className="w-full min-w-[580px] text-left text-sm">
-              <thead className="text-xs uppercase text-gray-500">
+            <table className="w-full min-w-[580px] text-left text-[12px] md:text-sm">
+              <thead className=" text-[12px] md:text-xs uppercase text-gray-500">
                 <tr>
-                  <th className="py-2">Producto</th>
-                  <th className="py-2">Proveedor</th>
-                  <th className="py-2">Cantidad</th>
-                  <th className="py-2">Subtotal</th>
-                  <th className="py-2">Estado</th>
+                  <th className="py-1 md:py-2">Producto</th>
+                  <th className="py-1 md:py-2">Proveedor</th>
+                  <th className="py-1 md:py-2">Cantidad</th>
+                  <th className="py-1 md:py-2">Subtotal</th>
+                  <th className="py-1 md:py-2">Estado</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {getOrderDetails(selectedOrderId).map((detail) =>
                   <tr key={detail.id}>
-                    <td className="py-2">{detail.product?.nombre || "Producto eliminado"}</td>
-                    <td className="py-2">{detail.supplier?.nombre || "Proveedor eliminado"}</td>
-                    <td className="py-2">{detail.cantidad}</td>
-                    <td className="py-2">{formatPrice(detail.subtotal)}</td>
-                    <td className="py-2">{detail.estado}</td>
+                    <td className="py-1 md:py-2">{detail.product?.nombre || "Producto eliminado"}</td>
+                    <td className="py-1 md:py-2">{detail.supplier?.nombre || "Proveedor eliminado"}</td>
+                    <td className="py-1 md:py-2">{detail.cantidad}</td>
+                    <td className="py-1 md:py-2">{formatPrice(detail.subtotal)}</td>
+                    <td className="py-1 md:py-2">{detail.estado}</td>
                   </tr>
                 )}
               </tbody>
@@ -588,24 +588,24 @@ export function Inventory() {
       </div>}
 
       {activeTab === "Lotes" && <div className="overflow-x-auto border-y border-gray-300 scrollbar">
-        <table className="w-full min-w-[700px] text-left text-sm">
-          <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+        <table className="w-full min-w-[700px] text-left text-[12px] md:text-sm">
+          <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
             <tr>
-              <th className="px-3 py-3">Lote</th>
-              <th className="px-3 py-3">Producto</th>
-              <th className="px-3 py-3">Ingreso</th>
-              <th className="px-3 py-3">Vencimiento</th>
-              <th className="px-3 py-3">Unidades recibidas</th>
+              <th className="p-1.5 md:px-3 md:py-3">Lote</th>
+              <th className="p-1.5 md:px-3 md:py-3">Producto</th>
+              <th className="p-1.5 md:px-3 md:py-3">Ingreso</th>
+              <th className="p-1.5 md:px-3 md:py-3">Vencimiento</th>
+              <th className="p-1.5 md:px-3 md:py-3">Unidades recibidas</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {data.lots.map((lot) =>
               <tr key={lot.id}>
-                <td className="px-3 py-3 font-semibold">{lot.numero_de_lote}</td>
-                <td className="px-3 py-3">{products.find((product) => product.id === lot.id_producto)?.nombre || "Producto eliminado"}</td>
-                <td className="px-3 py-3">{formatDate(lot.fecha_de_ingreso)}</td>
-                <td className="px-3 py-3">{formatDate(lot.fecha_de_vencimiento)}</td>
-                <td className="px-3 py-3">{lot.unidades}</td>
+                <td className="p-1.5 md:px-3 md:py-3 font-semibold">{lot.numero_de_lote}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{products.find((product) => product.id === lot.id_producto)?.nombre || "Producto eliminado"}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{formatDate(lot.fecha_de_ingreso)}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{formatDate(lot.fecha_de_vencimiento)}</td>
+                <td className="p-1.5 md:px-3 md:py-3">{lot.unidades}</td>
               </tr>
             )}
             {data.lots.length === 0 &&
@@ -618,31 +618,31 @@ export function Inventory() {
       </div>}
 
       {countEditorOpen && createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-3 sm:p-6" onClick={(event) => { if (event.target === event.currentTarget) setCountEditorOpen(false); }}>
-          <form onSubmit={saveInventoryCount} className="max-h-[92dvh] w-full max-w-4xl space-y-4 overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7 scrollbar">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-1.5 md:p-3 sm:p-6" onClick={(event) => { if (event.target === event.currentTarget) setCountEditorOpen(false); }}>
+          <form onSubmit={saveInventoryCount} className="max-h-[92dvh] w-full max-w-4xl space-y-4 overflow-y-auto rounded-1xl md:rounded-3xl bg-white p-2.5 md:p-7 shadow-2xl sm:p-5 scrollbar">
             <div>
-              <p className="text-sm text-gray-500">Conciliación de existencias</p>
-              <h2 className="text-xl font-bold">Conteo</h2>
+              <p className=" text-[12px] md:text-sm text-gray-500">Conciliación de existencias</p>
+              <h2 className="text-[14px] md:text-xl font-bold">Conteo</h2>
             </div>
             <div className="overflow-x-auto border-y border-gray-200 scrollbar">
-              <table className="w-full min-w-[600px] text-left text-sm">
-                <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+              <table className="w-full min-w-[600px] text-left  text-[12px] md:text-sm">
+                <thead className="bg-slate-100  text-[12px] md:text-xs uppercase text-gray-600">
                   <tr>
-                    <th className="px-3 py-2">Producto</th>
-                    <th className="px-3 py-2">Stock del sistema</th>
-                    <th className="px-3 py-2">Conteo</th>
+                    <th className="p-1.5 md:px-3 md:py-2">Producto</th>
+                    <th className="p-1.5 md:px-3 md:py-2">Stock del sistema</th>
+                    <th className="p-1.5 md:px-3 md:py-2">Conteo</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {stockCounts.map((count, index) => {
                     const countedProduct = products.find((product) => product.id === count.productId);
                     return <tr key={count.productId}>
-                      <td className="px-3 py-2">
+                      <td className="p-1.5 md:px-3 md:py-2">
                         <span className="block font-medium">{countedProduct?.nombre || "Producto eliminado"}</span>
                         {countedProduct?.codigo_barras && <span className="text-xs text-gray-500">{countedProduct.codigo_barras}</span>}
                       </td>
-                      <td className="px-3 py-2">{count.systemStock}</td>
-                      <td className="px-3 py-2">
+                      <td className="p-1.5 md:px-3 md:py-2">{count.systemStock}</td>
+                      <td className="p-1.5 md:px-3 md:py-2">
                         <input aria-label={`Conteo producto ${count.productId}`} required min="0" step="1" type="number" value={count.stock}
                           onChange={(event) => setStockCounts((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, stock: event.target.value } : item))}
                           className="w-32 border border-gray-300 p-2" />
@@ -652,31 +652,31 @@ export function Inventory() {
                 </tbody>
               </table>
             </div>
-            <p className="text-sm text-gray-600">Al confirmar, las existencias se ajustarán al conteo y quedará guardado el historial de diferencias.</p>
-            <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
-              <button type="button" onClick={() => setCountEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+            <p className=" text-[12px] md:text-sm text-gray-600">Al confirmar, las existencias se ajustarán al conteo y quedará guardado el historial de diferencias.</p>
+            <div className="flex justify-end gap-1.5 md:gap-3 border-t border-gray-200 pt-2 md:pt-4">
+              <button type="button" onClick={() => setCountEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
               <button type="submit" className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-                px-4 py-2 font-semibold text-white">Confirmar conteo</button>
+                px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Confirmar conteo</button>
             </div>
           </form>
         </div>, document.body
       )}
 
       {supplierEditorOpen && createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-4" onClick={(event) => { if (event.target === event.currentTarget) setSupplierEditorOpen(false); }}>
-          <form onSubmit={saveSupplier} className="max-h-[90dvh] w-full max-w-xl space-y-4 overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl scrollbar">
-            <h2 className="text-xl font-bold">{editingSupplier ? "Editar proveedor" : "Agregar proveedor"}</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-2 md:p-4" onClick={(event) => { if (event.target === event.currentTarget) setSupplierEditorOpen(false); }}>
+          <form onSubmit={saveSupplier} className="max-h-[90dvh] w-full max-w-xl space-y-4 overflow-y-auto rounded-1xl md:rounded-3xl bg-white p-3 md:p-6 shadow-2xl scrollbar">
+            <h2 className="text-[14px] md:text-xl font-bold">{editingSupplier ? "Editar proveedor" : "Agregar proveedor"}</h2>
+            <div className="grid gap-1.5 md:gap-3 sm:grid-cols-2">
               {[["nombre", "Nombre"], ["apellidos", "Apellidos"], ["correo", "Correo"], ["telefono", "Teléfono"]].map(([key, label]) =>
-                <label key={key} className="text-sm font-medium">
+                <label key={key} className=" text-[12px] md:text-sm font-medium">
                   {label}
                   <input required={key === "nombre"} type={key === "correo" ? "email" : "text"} value={supplierForm[key] || ""}
                     onChange={(event) => setSupplierForm({ ...supplierForm, [key]: event.target.value })} className="mt-1 w-full border border-gray-300 p-2" />
                 </label>
               )}
             </div>
-            <label className="block text-sm font-medium">Estado
+            <label className="block text-[12px] md:text-sm font-medium">Estado
               <select value={supplierForm.estado} onChange={(event) => setSupplierForm({ ...supplierForm, estado: event.target.value })}
                 className="mt-1 w-full border border-gray-300 bg-white p-2">
                 <option>Activo</option>
@@ -684,7 +684,7 @@ export function Inventory() {
               </select>
             </label>
             <fieldset>
-              <legend className="mb-2 text-sm font-semibold">Categorías que provee</legend>
+              <legend className="mb-2 text-[12px] md:text-sm font-semibold">Categorías que provee</legend>
               <div className="grid gap-2 sm:grid-cols-2">
                 {categories.map((category) =>
                   <label key={category.id} className="flex items-center gap-2 text-sm">
@@ -694,26 +694,26 @@ export function Inventory() {
                 )}
               </div>
             </fieldset>
-            <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
-              <button type="button" onClick={() => setSupplierEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+            <div className="flex justify-end gap-1.5 md:gap-3 border-t border-gray-200 pt-4">
+              <button type="button" onClick={() => setSupplierEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
               <button type="submit" className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-                px-4 py-2 font-semibold text-white">Guardar proveedor</button>
+                px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Guardar proveedor</button>
             </div>
           </form>
         </div>, document.body
       )}
 
       {orderEditorOpen && createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-3 sm:p-6" onClick={(event) => { if (event.target === event.currentTarget) setOrderEditorOpen(false); }}>
-          <form onSubmit={saveOrder} className="max-h-[92dvh] w-full max-w-3xl space-y-4 overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7 scrollbar">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-1.5 md:p-3 sm:p-6" onClick={(event) => { if (event.target === event.currentTarget) setOrderEditorOpen(false); }}>
+          <form onSubmit={saveOrder} className="max-h-[92dvh] w-full max-w-3xl space-y-4 overflow-y-auto rounded-1xl md:rounded-3xl bg-white p-2.5 md:p-5 shadow-2xl sm:p-7 scrollbar">
             <div>
-              <p className="text-sm text-gray-500">Abastecimiento</p>
-              <h2 className="text-xl font-bold">Crear pedido de tienda</h2>
+              <p className=" text-[12px] md:text-sm text-gray-500">Abastecimiento</p>
+              <h2 className="text-[14px] md:text-xl font-bold">Crear pedido de tienda</h2>
             </div>
             {orderLines.map((line, index) =>
-              <div key={`order-line-${index}`} className="grid gap-3 border-y border-gray-200 py-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_6rem_8rem_auto]">
-                <label className="text-sm font-medium">Producto
+              <div key={`order-line-${index}`} className="grid gap-1.5 md:gap-3 border-y border-gray-200 py-2 md:py-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_6rem_8rem_auto]">
+                <label className=" text-[12px] md:text-sm font-medium">Producto
                   <select required value={line.productId} onChange={(event) => updateOrderLine(index, "productId", event.target.value)}
                     className="mt-1 w-full border border-gray-300 bg-white p-2">
                     {products.map((product) =>
@@ -722,7 +722,7 @@ export function Inventory() {
                     )}
                   </select>
                 </label>
-                <label className="text-sm font-medium">Proveedor
+                <label className=" text-[12px] md:text-sm font-medium">Proveedor
                   <select required value={line.supplierId} onChange={(event) => updateOrderLine(index, "supplierId", event.target.value)}
                     className="mt-1 w-full border border-gray-300 bg-white p-2">
                     {activeSuppliers.map((supplier) =>
@@ -731,11 +731,11 @@ export function Inventory() {
                     )}
                   </select>
                 </label>
-                <label className="text-sm font-medium">Cantidad
+                <label className=" text-[12px] md:text-sm font-medium">Cantidad
                   <input required min="1" type="number" value={line.quantity} onChange={(event) => updateOrderLine(index, "quantity", event.target.value)}
                     className="mt-1 w-full border border-gray-300 p-2" />
                 </label>
-                <label className="text-sm font-medium">Costo unitario
+                <label className=" text-[12px] md:text-sm font-medium">Costo unitario
                   <input required min="0" type="number" value={line.unitCost} onChange={(event) => updateOrderLine(index, "unitCost", event.target.value)}
                     className="mt-1 w-full border border-gray-300 p-2" />
                 </label>
@@ -747,9 +747,9 @@ export function Inventory() {
               </div>
             )}
             <button type="button" onClick={() => setOrderLines((current) => [...current, createOrderLine(products, activeSuppliers)])}
-              className="text-sm font-semibold text-blue-800 underline">Agregar producto al pedido</button>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <label className="text-sm font-medium">Método de pago
+              className=" text-[12px] md:text-sm font-semibold text-blue-800 underline">Agregar producto al pedido</button>
+            <div className="grid gap-1.5 md:gap-3 sm:grid-cols-2">
+              <label className=" text-[12px] md:text-sm font-medium">Método de pago
                 <select value={paymentMethod} onChange={(event) => setPaymentMethod(event.target.value)}
                   className="mt-1 w-full border border-gray-300 bg-white p-2">
                   {paymentMethods.map((method) =>
@@ -757,7 +757,7 @@ export function Inventory() {
                   )}
                 </select>
               </label>
-              <label className="text-sm font-medium">Estado del pago
+              <label className=" text-[12px] md:text-sm font-medium">Estado del pago
                 <select value={paymentStatus} onChange={(event) => setPaymentStatus(event.target.value)}
                   className="mt-1 w-full border border-gray-300 bg-white p-2">
                   <option>Pendiente</option>
@@ -765,14 +765,14 @@ export function Inventory() {
                 </select>
               </label>
             </div>
-            <p className="text-sm text-gray-600">El stock se actualiza únicamente al recibir el pedido. Los lotes se registran sin vencimiento salvo que aplique.</p>
-            {activeSuppliers.length === 0 && <p className="text-sm text-amber-800">Registra al menos un proveedor activo para crear pedidos.</p>}
+            <p className=" text-[12px] md:text-sm text-gray-600">El stock se actualiza únicamente al recibir el pedido. Los lotes se registran sin vencimiento salvo que aplique.</p>
+            {activeSuppliers.length === 0 && <p className=" text-[12px] md:text-sm text-amber-800">Registra al menos un proveedor activo para crear pedidos.</p>}
             <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
-              <button type="button" onClick={() => setOrderEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+              <button type="button" onClick={() => setOrderEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
               <button type="submit" disabled={!products.length || activeSuppliers.length === 0}
                 className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-                px-4 py-2 font-semibold text-white">Guardar pedido</button>
+                px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Guardar pedido</button>
             </div>
           </form>
         </div>, document.body

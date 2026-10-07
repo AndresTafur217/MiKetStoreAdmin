@@ -298,16 +298,16 @@ export function PointOfSale() {
   };
 
   const renderHeader = () => (
-    <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-      <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-surface">
+    <section className="w-full h-15 lg:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row justify-between items-center">
+      <article className="rounded-1xl size-10 lg:size-14 flex justify-center items-center lg:shadow-md lg:bg-surface">
         <svg className="size-7">
           <use xlinkHref="/sprite.svg#miketicon" />
         </svg>
       </article>
-      <span className="flex-1 px-2 font-bold transition-all duration-300 text-2xl">Venta</span>
-      <div className="grid grid-cols-2 gap-4 text-right text-sm w-max">
-        <div><strong className="block">Fecha</strong>{dateTime}</div>
-        <div><strong className="block">Usuario</strong>{employee?.nombre || user?.nombre || "Operador"}
+      <span className="flex-1 px-2 font-bold transition-all duration-300 sm:text-2xl">Venta</span>
+      <div className="grid grid-cols-2 gap-2 md:gap-4 text-right text-sm w-max">
+        <div className="text-[10px] sm:text-sm"><strong className="block text-xs sm:text-[16px]">Fecha</strong>{dateTime}</div>
+        <div className="text-[10px] sm:text-sm"><strong className="block text-xs sm:text-[16px]">Usuario</strong>{employee?.nombre || user?.nombre || "Operador"}
           <span className="block text-xs text-gray-500">{employee?.id_rol || "Rol"}</span>
         </div>
       </div>
@@ -330,16 +330,16 @@ export function PointOfSale() {
 
   if (step === "customer") {
     return (
-      <section className="mx-auto flex w-full flex-col gap-5">
+      <section className="mx-auto flex w-full flex-col gap-2.5 md:gap-5">
         {renderHeader()}
         {renderStepNavigation()}
-        <section className="mx-auto w-full max-w-xl rounded-3xl border border-gray-300 bg-white p-5 shadow-sm sm:p-8">
-          <p className="text-sm text-gray-500">Punto de venta · Paso 1</p>
-          <h2 className="mt-1 text-2xl font-bold">Identificación del cliente</h2>
-          <p className="mt-2 text-sm text-gray-600">Ingresa la cédula para asociar la venta.</p>
-          <label className="mt-6 block text-sm font-semibold">Cédula del cliente
+        <section className="mx-auto w-full max-w-xl rounded-3xl border border-gray-300 bg-white p-2.5 md:p-5 shadow-sm sm:p-8">
+          <p className="text-xs sm:text-sm text-gray-500">Punto de venta · Paso 1</p>
+          <h2 className="mt-1 text-[18px] md:text-2xl font-bold">Identificación del cliente</h2>
+          <p className="mt-2 text-xs sm:text-sm text-gray-600">Ingresa la cédula para asociar la venta.</p>
+          <label className="mt-6 block text-xs sm:text-sm font-semibold">Cédula del cliente
             <input autoFocus inputMode="numeric" pattern="[0-9]*" value={documentNumber} onChange={(event) => { setDocumentNumber(event.target.value.replace(/\D/g, "")); setMessage(""); }}
-              placeholder="Solo números" className="mt-2 w-full rounded-xl border border-gray-300 px-4 py-4 text-xl" />
+              placeholder="Solo números" className="mt-2 w-full rounded-xl border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-[16px] md:text-xl" />
           </label>
           <div className="grid grid-cols-3 gap-2 pt-2">
             {keypadKeys.map((key) =>
@@ -352,9 +352,9 @@ export function PointOfSale() {
             {message && <p className="text-amber-800">{message}</p>}
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <button type="button" onClick={continueToProducts} disabled={!customer} className="min-h-12 rounded-xl bg-primary 
-              px-4 py-3 font-bold text-white disabled:opacity-40">Continuar</button>
-            <button type="button" onClick={continueWithoutCustomer} className="min-h-12 rounded-xl border border-gray-300 px-4 py-3 
+            <button type="button" onClick={continueToProducts} disabled={!customer} className="min-h-8 rounded-xl bg-primary 
+              px-2 py-1 md:px-4 md:py-2 font-bold text-white disabled:opacity-40">Continuar</button>
+            <button type="button" onClick={continueWithoutCustomer} className="min-h-8 rounded-xl border border-gray-300 px-2 py-1 md:px-4 md:py-2 
               font-semibold">Continuar sin cédula</button>
           </div>
         </section>
@@ -364,7 +364,7 @@ export function PointOfSale() {
 
   if (step === "payment") {
     return (
-      <section className="mx-auto flex w-full flex-col gap-5">
+      <section className="mx-auto flex w-full flex-col gap-2.5 md:gap-5">
         {renderHeader()}
         {renderStepNavigation()}
         <form onSubmit={registerSale} className="mx-auto grid w-full max-w-5xl gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(300px,0.9fr)]">

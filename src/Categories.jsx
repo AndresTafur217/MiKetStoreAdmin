@@ -69,15 +69,15 @@ export function Categories({ compact = false }) {
 
   return (
     <section className={compact ? "w-full overflow-x-auto scrollbar flex flex-col gap-5" : "mx-auto w-full flex flex-col gap-5"}>
-      <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-        <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+      <section className="w-full h-15 lg:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
+        <article className="rounded-1xl size-10 lg:size-14 flex justify-center items-center shadow-md bg-accent">
           <svg className="size-7">
             <use xlinkHref="/sprite.svg#categories" />
           </svg>
         </article>
         <span className="flex-1 px-2 font-bold transition-all duration-300">Categorias</span>
         <button type="button" onClick={() => openEditor()}
-          className="px-4 py-2 font-semibold text-white  bg-primary rounded-xl shadow-md transition-all duration-300 
+          className="p-2 lg:px-4 lg:py-2 font-semibold text-white  bg-primary rounded-xl shadow-md transition-all duration-300 
             hover:scale-105 hover:bg-primary/60">Agregar categoría</button>
       </section>
       <div className={compact ? "flex gap-3 min-w-max pb-2" : "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3"}>
@@ -96,13 +96,13 @@ export function Categories({ compact = false }) {
                 <footer className="flex justify-end gap-3 border-t border-gray-200 px-4 py-2 text-sm">
                   <button type="button" onClick={() => openEditor(category)} className="underline transition-all duration-300 
                     hover:scale-105 rounded-full hover:bg-black/50">
-                    <svg className="size-7">
+                    <svg className="size-5 md:size-7">
                       <use xlinkHref="/sprite.svg#edit" />
                     </svg>
                   </button>
                   <button type="button" onClick={() => deleteCategory(category)} className="text-red-700 underline transition-all duration-300 
                     hover:scale-105 rounded-full hover:bg-red-700/50">
-                    <svg className="size-7">
+                    <svg className="size-5 md:size-7">
                       <use xlinkHref="/sprite.svg#delete" />
                     </svg>
                   </button>
@@ -130,9 +130,9 @@ export function Categories({ compact = false }) {
                 className="mt-1 w-full border border-gray-300 p-2" />
             </label>
             <div className="flex justify-end gap-3">
-              <button type="button" onClick={() => setEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl 
+              <button type="button" onClick={() => setEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl 
                 hover:shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
-              <button type="submit" className="px-4 py-2 font-semibold text-white  bg-primary rounded-xl shadow-md 
+              <button type="submit" className="px-2 py-1 md:px-4 md:py-2 font-semibold text-white  bg-primary rounded-xl shadow-md 
                 transition-all duration-300 hover:scale-105 hover:bg-primary/60">Guardar categoría</button>
             </div>
           </form>

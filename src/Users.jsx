@@ -125,72 +125,72 @@ export function Users() {
   };
 
   return (
-    <section className="mx-auto w-full flex flex-col gap-5">
-      <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-        <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+    <section className="mx-auto w-full flex flex-col gap-2.5 md:gap-5">
+      <section className="w-full h-max lg:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row justify-between items-center">
+        <article className="rounded-1xl size-10 lg:size-14 flex justify-center items-center shadow-md bg-accent">
           <svg className="size-7">
             <use xlinkHref="/sprite.svg#users" />
           </svg>
         </article>
         <span className="flex-1 px-2 font-bold transition-all duration-300">Usuarios</span>
         {activeTab === "Usuarios" &&
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <input type="search" value={query} onChange={(event) => setQuery(event.target.value)}
-              placeholder="Nombre, documento o correo" aria-label="Buscar usuarios"
-              className="min-w-56 border border-gray-300 bg-white px-3 py-2 rounded-2xl" />
+              placeholder="Buscar" aria-label="Buscar usuarios"
+              className="w-30 sm:min-w-56 border border-gray-300 bg-white p-1.5 md:px-3 md:py-2 rounded-2xl" />
             <button type="button" onClick={() => openUserEditor()}
-              className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-              px-4 py-2 font-semibold text-white">Agregar usuario</button>
+              className="w-30 sm:min-w-56 bg-primary rounded-2xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
+              p-1.5 md:px-4 md:py-2 font-semibold text-white">Agregar</button>
           </div>}
         {activeTab === "Roles" &&
           <button type="button" onClick={() => openRoleEditor()}
             className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-            px-4 py-2 font-semibold text-white">Agregar rol</button>}
+            px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Agregar rol</button>}
         {activeTab === "Direcciones" &&
           <button type="button" onClick={() => openAddressEditor()}
             className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-            px-4 py-2 font-semibold text-white">Agregar dirección</button>}
+            px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Agregar dirección</button>}
       </section>
 
-      <nav className="mb-5 flex gap-5 border-b border-gray-300" aria-label="Administración de usuarios">
+      <nav className="mb-2.5 md:mb-5 flex gap-2.5 md:gap-5 border-b border-gray-300" aria-label="Administración de usuarios">
         {tabs.map((tab) =>
           <button key={tab} type="button" onClick={() => setActiveTab(tab)}
-            className={`border-b-2 px-1 pb-3 text-sm font-semibold ${activeTab === tab ? "border-emerald-700 text-emerald-900" : "border-transparent text-gray-600 hover:text-gray-950"}`}>{tab}
+            className={`border-b-2 px-1 pb-1.5 md:pb-3 text-sm font-semibold ${activeTab === tab ? "border-emerald-700 text-emerald-900" : "border-transparent text-gray-600 hover:text-gray-950"}`}>{tab}
           </button>
         )}
       </nav>
 
       {activeTab === "Usuarios" &&
         <div className="overflow-x-auto border-y border-gray-300">
-          <table className="w-full min-w-[900px] text-left text-sm">
-            <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+          <table className="w-full min-w-[900px] text-left  text-[12px] md:text-sm">
+            <thead className="bg-slate-100  text-[12px] md:text-xs uppercase text-gray-600">
               <tr>
-                <th className="px-3 py-3">Usuario</th>
-                <th className="px-3 py-3">Documento</th>
-                <th className="px-3 py-3">Rol</th>
-                <th className="px-3 py-3">Contacto</th>
-                <th className="px-3 py-3">Ingreso</th>
-                <th className="px-3 py-3">Estado</th>
-                <th className="px-3 py-3">Acciones</th>
+                <th className="p-1.5 md:px-3 md:py-3">Usuario</th>
+                <th className="p-1.5 md:px-3 md:py-3">Documento</th>
+                <th className="p-1.5 md:px-3 md:py-3">Rol</th>
+                <th className="p-1.5 md:px-3 md:py-3">Contacto</th>
+                <th className="p-1.5 md:px-3 md:py-3">Ingreso</th>
+                <th className="p-1.5 md:px-3 md:py-3">Estado</th>
+                <th className="p-1.5 md:px-3 md:py-3">Acciones</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredUsers.map((user) =>
                 <tr key={user.id}>
-                  <td className="px-3 py-3">
+                  <td className="p-1.5 md:px-3 md:py-3">
                     <strong className="block">{user.nombre} {user.apellidos}</strong>
                     <span className="text-gray-500">{user.id}</span>
                   </td>
-                  <td className="px-3 py-3">{user.tipo_de_documento} {user.numero_documento}</td>
-                  <td className="px-3 py-3">{roles.find((role) => role.id === user.id_rol)?.nombre || user.id_rol}</td>
-                  <td className="px-3 py-3">{user.correo}
+                  <td className="p-1.5 md:px-3 md:py-3">{user.tipo_de_documento} {user.numero_documento}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{roles.find((role) => role.id === user.id_rol)?.nombre || user.id_rol}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{user.correo}
                     <span className="block text-gray-500">{user.telefono}</span>
                   </td>
-                  <td className="px-3 py-3">{user.fecha_de_ingreso}</td>
-                  <td className="px-3 py-3">
+                  <td className="p-1.5 md:px-3 md:py-3">{user.fecha_de_ingreso}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">
                     <span className={user.estado === "Activo" ? "text-emerald-800" : "text-red-800"}>{user.estado}</span>
                   </td>
-                  <td className="px-3 py-3">
+                  <td className="p-1.5 md:px-3 md:py-3">
                     <div className="flex gap-3">
                       <button type="button" onClick={() => openUserEditor(user)} className="underline transition-all duration-300 
                         hover:scale-105 rounded-full hover:bg-black/50">
@@ -223,24 +223,24 @@ export function Users() {
 
       {activeTab === "Roles" &&
         <div className="overflow-x-auto border-y border-gray-300">
-          <table className="w-full min-w-[650px] text-left text-sm">
-            <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+          <table className="w-full min-w-[650px] text-left text-[12px] md:text-sm">
+            <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
               <tr>
-                <th className="px-3 py-3">Rol</th>
-                <th className="px-3 py-3">Funciones</th>
-                <th className="px-3 py-3">Salario mensual</th>
-                <th className="px-3 py-3">Usuarios</th>
-                <th className="px-3 py-3">Acciones</th>
+                <th className="p-1.5 md:px-3 md:py-3">Rol</th>
+                <th className="p-1.5 md:px-3 md:py-3">Funciones</th>
+                <th className="p-1.5 md:px-3 md:py-3">Salario mensual</th>
+                <th className="p-1.5 md:px-3 md:py-3">Usuarios</th>
+                <th className="p-1.5 md:px-3 md:py-3">Acciones</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {roles.map((role) =>
                 <tr key={role.id}>
-                  <td className="px-3 py-3 font-semibold">{role.nombre}</td>
-                  <td className="px-3 py-3">{role.funciones.join(" · ")}</td>
-                  <td className="px-3 py-3">{new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(role.salario)}</td>
-                  <td className="px-3 py-3">{users.filter((user) => user.id_rol === role.id).length}</td>
-                  <td className="px-3 py-3">
+                  <td className="p-1.5 md:px-3 md:py-3 font-semibold">{role.nombre}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{role.funciones.join(" · ")}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(role.salario)}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">{users.filter((user) => user.id_rol === role.id).length}</td>
+                  <td className="p-1.5 md:px-3 md:py-3">
                     <div className="flex gap-3">
                       <button type="button" onClick={() => openRoleEditor(role)} className="underline transition-all duration-300 
                         hover:scale-105 rounded-full hover:bg-black/50">
@@ -265,30 +265,30 @@ export function Users() {
 
       {activeTab === "Direcciones" &&
         <>
-          <p className="mb-3 text-sm text-gray-600">Las direcciones de entrega pertenecen al usuario; los clientes deben actualizar sus direcciones desde su cuenta web.</p>
+          <p className="mb-3 text-[12px] md:text-sm text-gray-600">Las direcciones de entrega pertenecen al usuario; los clientes deben actualizar sus direcciones desde su cuenta web.</p>
           <div className="overflow-x-auto border-y border-gray-300">
-            <table className="w-full min-w-[760px] text-left text-sm">
-              <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+            <table className="w-full min-w-[760px] text-left text-[12px] md:text-sm">
+              <thead className="bg-slate-100 text-[12px] md:text-xs uppercase text-gray-600">
                 <tr>
-                  <th className="px-3 py-3">Usuario</th>
-                  <th className="px-3 py-3">Dirección</th>
-                  <th className="px-3 py-3">Ciudad</th>
-                  <th className="px-3 py-3">Predeterminada</th>
-                  <th className="px-3 py-3">Acciones</th>
+                  <th className="p-1.5 md:px-3 md:py-3">Usuario</th>
+                  <th className="p-1.5 md:px-3 md:py-3">Dirección</th>
+                  <th className="p-1.5 md:px-3 md:py-3">Ciudad</th>
+                  <th className="p-1.5 md:px-3 md:py-3">Predeterminada</th>
+                  <th className="p-1.5 md:px-3 md:py-3">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {addresses.map((address) => {
                   const owner = users.find((user) => user.id === address.id_usuario);
                   return <tr key={address.id}>
-                    <td className="px-3 py-3">{owner ? `${owner.nombre} ${owner.apellidos}` : address.id_usuario}</td>
-                    <td className="px-3 py-3">
+                    <td className="p-1.5 md:px-3 md:py-3">{owner ? `${owner.nombre} ${owner.apellidos}` : address.id_usuario}</td>
+                    <td className="p-1.5 md:px-3 md:py-3">
                       {address.tipo_de_via} {address.numero_de_via}, {address.numero_de_vivienda}
                       <span className="block text-gray-500">{address.barrio}, {address.localidad}</span>
                     </td>
-                    <td className="px-3 py-3">{address.ciudad}</td>
-                    <td className="px-3 py-3">{address.predeterminada ? "Sí" : "No"}</td>
-                    <td className="px-3 py-3">
+                    <td className="p-1.5 md:px-3 md:py-3">{address.ciudad}</td>
+                    <td className="p-1.5 md:px-3 md:py-3">{address.predeterminada ? "Sí" : "No"}</td>
+                    <td className="p-1.5 md:px-3 md:py-3">
                       <div className="flex gap-3">
                         <button type="button" onClick={() => openAddressEditor(address)} className="underline transition-all duration-300 
                           hover:scale-105 rounded-full hover:bg-black/50">
@@ -381,10 +381,10 @@ export function Users() {
                 </div>
                 <p className="text-xs text-gray-500">La contraseña se conserva como hash de demostración y nunca se muestra en esta pantalla.</p>
                 <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
-                  <button type="button" onClick={() => setUserEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+                  <button type="button" onClick={() => setUserEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                     hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
                   <button type="submit" className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-                    px-4 py-2 font-semibold text-white">Guardar usuario</button>
+                    px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Guardar usuario</button>
                 </div>
               </form>
             }
@@ -410,10 +410,10 @@ export function Users() {
                 className="mt-1 w-full border border-gray-300 p-2" />
             </label>
             <div className="flex justify-end gap-3">
-              <button type="button" onClick={() => setRoleEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+              <button type="button" onClick={() => setRoleEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
               <button type="submit" className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-                px-4 py-2 font-semibold text-white">Guardar rol</button>
+                px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Guardar rol</button>
             </div>
           </form>
         </div>, document.body
@@ -454,10 +454,10 @@ export function Users() {
               Dirección predeterminada
             </label>
             <div className="flex justify-end gap-3">
-              <button type="button" onClick={() => setAddressEditorOpen(false)} className="border border-gray-400 px-4 py-2 rounded-xl hover:shadow-md transition-all duration-300 
+              <button type="button" onClick={() => setAddressEditorOpen(false)} className="border border-gray-400 px-2 py-1 md:px-4 md:py-2 rounded-xl hover:shadow-md transition-all duration-300 
                 hover:scale-105 hover:bg-primary-dark/60 hover:text-white">Cancelar</button>
               <button type="submit" className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-                px-4 py-2 font-semibold text-white">Guardar dirección</button>
+                px-2 py-1 md:px-4 md:py-2 font-semibold text-white">Guardar dirección</button>
             </div>
           </form>
         </div>, document.body

@@ -77,61 +77,61 @@ export function Sales() {
 
   return (
     <section className="mx-auto w-full">
-      <section className="w-full h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row items-center">
-        <article className="rounded-1xl size-[56px] flex justify-center items-center shadow-md bg-accent">
+      <section className="w-full h-max md:h-20 p-2.5 overflow-hidden border shadow-md bg-surface-alt border-border-gray rounded-3xl flex flex-row justify-between items-center">
+        <article className="rounded-1xl size-10 md:size-14 flex justify-center items-center shadow-md bg-accent">
           <svg className="size-7">
             <use xlinkHref="/sprite.svg#shop" />
           </svg>
         </article>
-        <span className="flex-1 px-2 font-bold transition-all duration-300">Ventas</span>
-        <div className="flex flex-wrap gap-2">
+        <span className="flex-1 px-2 font-bold">Ventas</span>
+        <div className="flex flex-wrap gap-1 md:gap-2 justify-end w-min sm:w-max">
           <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} 
-            placeholder="Venta o cliente" aria-label="Buscar ventas" className="min-w-48 border border-gray-300 bg-white px-3 py-2 rounded-xl" />
+            placeholder="Venta o cliente" aria-label="Buscar ventas" className="min-w-40 max-w-20 text-[12px] md:text-[16px] border border-gray-300 bg-white p-1 md:px-3 md:py-2 rounded-xl" />
           <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} aria-label="Filtrar por estado de venta" 
-            className="border border-gray-300 bg-white px-3 py-2 rounded-xl">
+            className="border border-gray-300 bg-white p-1 md:px-3 md:py-2 rounded-xl text-[12px] md:text-[16px]">
             <option value="">Todos los estados</option>
             <option value="En espera">En espera</option>
             <option value="Pagada">Pagada</option>
             <option value="Cancelada">Cancelada</option>
           </select>
           <Link to="/pos" 
-            className="bg-primary rounded-xl shadow-md transition-all duration-300 hover:scale-105 hover:bg-primary/60 
-              px-4 py-2 font-semibold text-white">Registrar venta
+            className="bg-primary rounded-xl shadow-md transition-all text-[12px] md:text-[16px] duration-300 hover:scale-105 hover:bg-primary/60 
+              p-1 md:px-4 md:py-2 font-semibold text-white">Registrar venta
           </Link>
         </div>
       </section>
 
-      <div className="mb-5 grid grid-cols-1 gap-4 border-y border-gray-300 py-4 sm:grid-cols-3">
-        <div><p className="text-sm text-gray-500">Ventas registradas</p><strong className="text-xl">{sales.length}</strong></div>
-        <div><p className="text-sm text-gray-500">Pagadas / en espera</p><strong className="text-xl">{paidCount} / {pendingCount}</strong></div>
-        <div><p className="text-sm text-gray-500">Con domicilio</p><strong className="text-xl">{deliveryCount}</strong></div>
+      <div className="mb-2 sm:mb-5 grid grid-cols-3 gap-2 sm:gap-4 border-y border-gray-300 py-2 sm:py-4">
+        <div><p className="text-[12px] sm:text-sm text-gray-500">Ventas registradas</p><strong className="text-[16px] sm:text-xl">{sales.length}</strong></div>
+        <div><p className="text-[12px] sm:text-sm text-gray-500">Pagadas / en espera</p><strong className="text-[16px] sm:text-xl">{paidCount} / {pendingCount}</strong></div>
+        <div><p className="text-[12px] sm:text-sm text-gray-500">Con domicilio</p><strong className="text-[16px] sm:text-xl">{deliveryCount}</strong></div>
       </div>
 
       <div className="overflow-x-auto border-y border-gray-300">
-        <table className="w-full min-w-[950px] text-left text-sm">
+        <table className="w-full min-w-[950px] text-left text-[12px] sm:text-sm">
           <thead className="bg-slate-100 text-xs uppercase text-gray-600">
             <tr>
-              <th className="px-3 py-3">Venta</th>
-              <th className="px-3 py-3">Cliente</th>
-              <th className="px-3 py-3">Tipo</th>
-              <th className="px-3 py-3">Fecha</th>
-              <th className="px-3 py-3">Pago</th>
-              <th className="px-3 py-3">Domicilio</th>
-              <th className="px-3 py-3">Total</th>
-              <th className="px-3 py-3">Detalle</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Venta</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Cliente</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Tipo</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Fecha</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Pago</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Domicilio</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Total</th>
+              <th className="p-1.5 sm:px-3 sm:py-3">Detalle</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {filteredSales.map((sale) => (
               <tr key={sale.id}>
-                <td className="px-3 py-3 font-semibold">{sale.id}</td>
-                <td className="px-3 py-3">{sale.cliente}</td>
-                <td className="px-3 py-3">{sale.tipo_venta}</td>
-                <td className="px-3 py-3">{formatDate(sale.fecha_venta)}</td>
-                <td className={`px-3 py-3 ${sale.estado === "En espera" ? "text-amber-800" : "text-emerald-800"}`}>{sale.estado}</td>
-                <td className="px-3 py-3">{sale.domicilio?.estado || "No requerido"}</td>
-                <td className="px-3 py-3 font-semibold">{formatPrice(sale.total)}</td>
-                <td className="px-3 py-3">
+                <td className="p-1.5 sm:px-3 sm:py-3 font-semibold">{sale.id}</td>
+                <td className="p-1.5 sm:px-3 sm:py-3">{sale.cliente}</td>
+                <td className="p-1.5 sm:px-3 sm:py-3">{sale.tipo_venta}</td>
+                <td className="p-1.5 sm:px-3 sm:py-3">{formatDate(sale.fecha_venta)}</td>
+                <td className={`p-1.5 sm:px-3 sm:py-3 ${sale.estado === "En espera" ? "text-amber-800" : "text-emerald-800"}`}>{sale.estado}</td>
+                <td className="p-1.5 sm:px-3 sm:py-3">{sale.domicilio?.estado || "No requerido"}</td>
+                <td className="p-1.5 sm:px-3 sm:py-3 font-semibold">{formatPrice(sale.total)}</td>
+                <td className="p-1.5 sm:px-3 sm:py-3">
                   <button type="button" onClick={() => setSelectedSale(sale)} className="text-blue-800 underline">
                     <svg className="size-7">
                       <use xlinkHref="/sprite.svg#seemore" />
